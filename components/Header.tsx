@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Sun, Moon } from 'react-feather';
 import Link from 'next/link';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 import clsx from 'clsx';
+import { useOutsideAlerter } from '@/lib/hooks';
 
 export default function Header({
   themeState,
@@ -25,6 +26,11 @@ export default function Header({
     }
   };
 
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+
+  useOutsideAlerter([menuRef, menuButtonRef], () => setShowMenu(false));
+
   return (
     <header className="sticky top-0 z-10 h-[70px] w-full shadow-xl">
       <nav className="flex items-center justify-between py-4">
@@ -44,6 +50,7 @@ export default function Header({
           />
           <div className="relative mr-6">
             <button
+              ref={menuButtonRef}
               type="button"
               className="inline-flex items-center rounded-lg p-2 text-sm font-medium text-gray-500"
               id="user-menu"
@@ -65,7 +72,7 @@ export default function Header({
               </svg>
               <span className="ml-2">Profile</span>
             </button>
-            {showMenu && <Menu />}
+            {showMenu && <Menu innerRef={menuRef} />}
           </div>
         </div>
       </nav>
@@ -73,11 +80,12 @@ export default function Header({
   );
 }
 
-function Menu() {
+function Menu({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement> }) {
   const themeSwitcher = useThemeSwitcher();
 
   return (
     <div
+      ref={innerRef}
       className={clsx(
         'absolute -right-4 top-14 z-50 mt-2 w-48 origin-top-right overflow-hidden rounded-md shadow-md',
         {
