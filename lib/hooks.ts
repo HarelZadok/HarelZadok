@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect } from 'react';
 
 export function useOutsideAlerter(refs: MutableRefObject<any>[], callback: () => void) {
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       for (const ref of refs) {
         if (ref.current && ref.current.contains(event.target)) {
           return;
