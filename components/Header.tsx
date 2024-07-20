@@ -72,7 +72,7 @@ export default function Header({
               </svg>
               <span className="ml-2">Profile</span>
             </button>
-            {showMenu && <Menu innerRef={menuRef} />}
+            <Menu showMenu={showMenu} setShowMenu={setShowMenu} innerRef={menuRef} />
           </div>
         </div>
       </nav>
@@ -80,8 +80,20 @@ export default function Header({
   );
 }
 
-function Menu({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement> }) {
+function Menu({
+  showMenu,
+  setShowMenu,
+  innerRef,
+}: {
+  showMenu: boolean;
+  setShowMenu: (b: boolean) => void;
+  innerRef?: React.RefObject<HTMLDivElement>;
+}) {
   const themeSwitcher = useThemeSwitcher();
+
+  if (!showMenu) {
+    return null;
+  }
 
   return (
     <div
@@ -96,6 +108,7 @@ function Menu({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement> }) {
     >
       <Link
         href="/profile"
+        onClick={() => setShowMenu(false)}
         className={clsx('block px-4 py-2 text-sm', {
           ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
           ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
@@ -104,7 +117,8 @@ function Menu({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement> }) {
         Your Profile
       </Link>
       <Link
-        href="#"
+        href="/"
+        onClick={() => setShowMenu(false)}
         className={clsx('block px-4 py-2 text-sm', {
           ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
           ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
@@ -113,7 +127,8 @@ function Menu({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement> }) {
         Settings
       </Link>
       <Link
-        href="#"
+        href="/"
+        onClick={() => setShowMenu(false)}
         className={clsx('block px-4 py-2 text-sm', {
           ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
           ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
