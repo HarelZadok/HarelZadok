@@ -1,12 +1,6 @@
-import React, { useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 
-export function useOutsideAlerter({
-  refs,
-  callback,
-}: {
-  refs: React.Ref<any>;
-  callback: () => void;
-}) {
+export function useOutsideAlerter(refs: MutableRefObject<any>[], callback: () => void) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       for (const ref of refs) {
