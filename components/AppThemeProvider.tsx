@@ -3,6 +3,12 @@
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import Header from '@/components/Header';
 import React, { useEffect, useState } from 'react';
+import { Inter } from 'next/font/google';
+import clsx from 'clsx';
+
+const inter = Inter({ subsets: ['latin'] });
+
+let currentTheme: string;
 
 export default function AppThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeState, setThemeState] = useState('');
@@ -14,7 +20,7 @@ export default function AppThemeProvider({ children }: { children: React.ReactNo
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const currentTheme = localStorage.getItem('theme') || 'light';
+      currentTheme = localStorage.getItem('theme') || 'light';
       setThemeState(currentTheme);
     }
   }, [setThemeState]);
@@ -24,11 +30,20 @@ export default function AppThemeProvider({ children }: { children: React.ReactNo
   }
 
   return (
-    <ThemeSwitcherProvider themeMap={themes} defaultTheme={themeState}>
-      <div className="h-[calc(100dvh-70px)] w-full">
-        <Header themeState={themeState} setThemeState={setThemeState} />
-        {children}
-      </div>
-    </ThemeSwitcherProvider>
+    <body
+      className={clsx(
+        inter.className,
+        themeState === 'dark'
+          ? 'bg-[rgb(30,30,30)] text-white'
+          : 'bg-[rgb(240,240,240)] text-black',
+      )}
+    >
+      <ThemeSwitcherProvider themeMap={themes} defaultTheme={themeState}>
+        <div className="h-[100dvh] w-full overflow-hidden">
+          <Header themeState={themeState} setThemeState={setThemeState} />
+          <div className="max-h-[calc(100dvh-70px)] overflow-auto">{children}</div>
+        </div>
+      </ThemeSwitcherProvider>
+    </body>
   );
 }

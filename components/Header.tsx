@@ -57,7 +57,7 @@ export default function Header({
   ];
 
   return (
-    <header className="sticky top-0 z-10 h-[70px] w-full shadow-xl">
+    <header className="sticky top-0 z-10 h-[70px] w-full flex-shrink-0 shadow-xl">
       <nav className="flex items-center py-4">
         <Menu
           show={pageWidth <= menuWidth}

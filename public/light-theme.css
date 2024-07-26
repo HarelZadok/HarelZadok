@@ -1,12 +1,3 @@
-body, header {
-    background-color: rgb(240, 240, 240);
-    color: black;
-}
-
-::-webkit-scrollbar-track {
-    background: #cfcfcf;
-}
-
 ::-webkit-scrollbar-corner {
     background: #cfcfcf;
 }
