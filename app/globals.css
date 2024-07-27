@@ -14,22 +14,24 @@
   }
 }
 
-body,
-header {
-  background-color: rgb(235, 235, 235);
-  color: black;
-}
+:root {
+  body,
+  header {
+    background-color: rgb(235, 235, 235);
+    color: black;
+  }
 
-::-webkit-scrollbar-track {
-  background: #cfcfcf;
-}
+  ::-webkit-scrollbar-track {
+    background: #cfcfcf;
+  }
 
-::-webkit-scrollbar-corner {
-  background: #cfcfcf;
+  ::-webkit-scrollbar-corner {
+    background: #cfcfcf;
+  }
 }
 
 [data-theme='dark'] {
-  body, 
+  body,
   header {
     background-color: rgb(30, 30, 30);
     color: white;
