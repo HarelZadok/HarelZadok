@@ -15,35 +15,33 @@
 }
 
 :root {
-  body,
-  header {
-    background-color: rgb(235, 235, 235);
-    color: black;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #cfcfcf;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: #cfcfcf;
-  }
+  --theme-color: rgb(235, 235, 235);
+  --color: black;
+  --scrollbar-background: #cfcfcf;
 }
 
 [data-theme='dark'] {
-  body,
-  header {
-    background-color: rgb(30, 30, 30);
-    color: white;
-  }
+  --theme-color: rgb(30, 30, 30);
+  --color: white;
+  --scrollbar-background: #333;
+}
 
-  ::-webkit-scrollbar-track {
-    background: #333;
-  }
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-background);
+}
 
-  ::-webkit-scrollbar-corner {
-    background: #333;
-  }
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-background);
+}
+
+body {
+  background-color: var(--theme-color);
+  color: var(--color);
+}
+
+header {
+  background-color: var(--theme-color);
+  color: var(--color);
 }
 
 @media only screen and (min-device-width: 500px) {

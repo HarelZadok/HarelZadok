@@ -4,7 +4,7 @@ const config: {
   content: string[];
   important: boolean;
 } = {
-  important: true,
+  important: false,
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
