@@ -1,19 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
+import { useTheme } from 'next-themes';
 import { GooSpinner } from 'react-spinners-kit';
 
 export default function Loading() {
-  const themeSwitcher = useThemeSwitcher();
+  const { theme } = useTheme();
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden">
-      <GooSpinner
-        size={7}
-        sizeUnit="rem"
-        color={themeSwitcher.currentTheme === 'dark' ? '#fff' : '#000'}
-      />
+    <div className="h-body flex w-full items-center justify-center overflow-hidden">
+      <GooSpinner size={7} sizeUnit="rem" color={theme === 'dark' ? '#fff' : '#000'} />
     </div>
   );
 }

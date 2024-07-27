@@ -3,29 +3,23 @@
 import React, { useState, useRef } from 'react';
 import { Sun, Moon } from 'react-feather';
 import Link from 'next/link';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
+import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import { useOutsideAlerter } from '@/lib/hooks';
 import { LuMenu } from 'react-icons/lu';
 import { useEffect } from 'react';
 
-export default function Header({
-  themeState,
-  setThemeState,
-}: {
-  themeState: string;
-  setThemeState: React.Dispatch<React.SetStateAction<string>>;
-}) {
+export default function Header() {
   const [pageWidth, setPageWidth] = useState(window.innerWidth);
   const menuWidth = 600;
 
+  const { theme, setTheme } = useTheme();
+
   const toggleTheme = () => {
-    if (themeState === 'dark') {
-      localStorage.setItem('theme', 'light');
-      setThemeState('light');
+    if (theme === 'dark') {
+      setTheme('light');
     } else {
-      localStorage.setItem('theme', 'dark');
-      setThemeState('dark');
+      setTheme('dark');
     }
   };
 
@@ -59,21 +53,11 @@ export default function Header({
   return (
     <header className="sticky top-0 z-10 h-[70px] w-full flex-shrink-0 shadow-xl">
       <nav className="flex items-center py-4">
-        <Menu
-          show={pageWidth <= menuWidth}
-          options={navOptions}
-          toggleTheme={toggleTheme}
-          themeState={themeState}
-        />
+        <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
         <Link className="ml-4 text-2xl font-bold" href="/">
           HarelZadok
         </Link>
-        <ExpandedMenu
-          options={navOptions}
-          toggleTheme={toggleTheme}
-          themeState={themeState}
-          show={pageWidth > menuWidth}
-        />
+        <ExpandedMenu options={navOptions} toggleTheme={toggleTheme} show={pageWidth > menuWidth} />
         <ProfileMenu className="relative mr-6" />
       </nav>
     </header>
@@ -84,15 +68,15 @@ function ExpandedMenu({
   show,
   options,
   toggleTheme,
-  themeState,
   className,
 }: {
   show?: boolean;
   options?: { title: string; href: string }[];
   toggleTheme?: () => void;
-  themeState?: string;
   className?: string;
 }) {
+  const { theme } = useTheme();
+
   if (!show) {
     return <div className="w-full" />;
   }
@@ -100,7 +84,7 @@ function ExpandedMenu({
   const Divider = () => (
     <div
       className={clsx('ml-6 mr-2 h-[35px] w-0.5 rounded-full bg-gray-200', {
-        ['bg-gray-500']: themeState === 'light',
+        ['bg-gray-500']: theme === 'light',
       })}
     />
   );
@@ -121,7 +105,7 @@ function ExpandedMenu({
       </div>
       <>
         <div className="flex items-center">
-          {themeState === 'dark' ? (
+          {theme === 'dark' ? (
             <Sun cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
           ) : (
             <Moon cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
@@ -137,16 +121,14 @@ function Menu({
   show,
   options,
   toggleTheme,
-  themeState,
   className,
 }: {
   show: boolean;
   options?: { title: string; href: string }[];
   toggleTheme?: () => void;
-  themeState?: string;
   className?: string;
 }) {
-  const themeSwitcher = useThemeSwitcher();
+  const { theme } = useTheme();
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -170,8 +152,8 @@ function Menu({
           className={clsx(
             'absolute left-2 top-[70px] z-50 mt-2 w-48 origin-top-left overflow-hidden rounded-md shadow-md',
             {
-              ['bg-[rgb(255,255,255)]']: themeSwitcher.currentTheme === 'light',
-              ['bg-[rgb(40,40,40)]']: themeSwitcher.currentTheme === 'dark',
+              ['bg-[rgb(255,255,255)]']: theme === 'light',
+              ['bg-[rgb(40,40,40)]']: theme === 'dark',
             },
           )}
         >
@@ -181,8 +163,8 @@ function Menu({
               onClick={() => setShowMenu(false)}
               key={index}
               className={clsx('block px-4 py-2 text-center text-sm', {
-                ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
-                ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
+                ['hover:bg-gray-100']: theme === 'light',
+                ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
               })}
             >
               {option.title}
@@ -194,11 +176,11 @@ function Menu({
               setShowMenu(false);
             }}
             className={clsx('block w-full px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
+              ['hover:bg-gray-100']: theme === 'light',
+              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
-            {themeState === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           </button>
         </div>
       )}
@@ -207,7 +189,7 @@ function Menu({
 }
 
 function ProfileMenu({ show = true, className }: { show?: boolean; className?: string }) {
-  const themeSwitcher = useThemeSwitcher();
+  const { theme } = useTheme();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -225,7 +207,7 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
       <button
         ref={profileMenuButtonRef}
         type="button"
-        className="inline-flex items-center rounded-lg p-2 text-sm font-medium text-gray-500"
+        className="inline-flex items-center rounded-lg bg-transparent p-2 text-sm font-medium text-gray-500"
         id="user-menu"
         onClick={() => setShowProfileMenu(!showProfileMenu)}
       >
@@ -251,8 +233,8 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
           className={clsx(
             'absolute -right-4 top-[55px] z-50 mt-2 w-48 origin-top-right overflow-hidden rounded-md shadow-md',
             {
-              ['bg-[rgb(255,255,255)]']: themeSwitcher.currentTheme === 'light',
-              ['bg-[rgb(40,40,40)]']: themeSwitcher.currentTheme === 'dark',
+              ['bg-[rgb(255,255,255)]']: theme === 'light',
+              ['bg-[rgb(40,40,40)]']: theme === 'dark',
             },
           )}
         >
@@ -260,8 +242,8 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
             href="/profile"
             onClick={() => setShowProfileMenu(false)}
             className={clsx('block px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
+              ['hover:bg-gray-100']: theme === 'light',
+              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
             Your Profile
@@ -270,8 +252,8 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
             href="/settings"
             onClick={() => setShowProfileMenu(false)}
             className={clsx('block px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
+              ['hover:bg-gray-100']: theme === 'light',
+              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
             Settings
@@ -281,9 +263,9 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
               setShowProfileMenu(false);
               alert('Accounts are not supported yet.');
             }}
-            className={clsx('block w-full px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: themeSwitcher.currentTheme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: themeSwitcher.currentTheme === 'dark',
+            className={clsx('block w-full bg-transparent px-4 py-2 text-center text-sm', {
+              ['hover:bg-gray-100']: theme === 'light',
+              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
             Logout
