@@ -1,19 +1,19 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Sun, Moon } from 'react-feather';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import { useOutsideAlerter } from '@/lib/hooks';
 import { LuMenu } from 'react-icons/lu';
-import { useEffect } from 'react';
 
 export default function Header() {
-  const [pageWidth, setPageWidth] = useState(window.innerWidth);
-  const menuWidth = 600;
-
   const { theme, setTheme } = useTheme();
+
+  const [pageWidth, setPageWidth] = useState(window.innerWidth);
+
+  const menuWidth = 600;
 
   const toggleTheme = () => {
     if (theme === 'dark') {
