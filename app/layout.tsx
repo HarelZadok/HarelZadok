@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: "Harel Zadok's website.",
 };
 
+
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
