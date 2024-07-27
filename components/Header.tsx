@@ -32,9 +32,11 @@ export default function Header() {
     };
 
     window.addEventListener('resize', handleResize);
+    window.addEventListener('deviceorientation', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('deviceorientation', handleResize);
     };
   }, [setPageWidth]);
 
