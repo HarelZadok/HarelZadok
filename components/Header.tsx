@@ -10,6 +10,7 @@ import { LuMenu } from 'react-icons/lu';
 import IconComponent from './IconComponent';
 import { usePathname } from 'next/navigation';
 import { PiUserCircleLight } from 'react-icons/pi';
+import { IoClose } from 'react-icons/io5';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -163,17 +164,22 @@ const Menu = memo(
 
     return (
       <div className={clsx('flex items-center', className)}>
-        <button ref={menuButtonRef} onClick={() => setShowMenu(!showMenu)} className="ml-6 p-0">
-          <LuMenu size={28} className="m-0 p-0" />
+        <button ref={menuButtonRef} onClick={() => setShowMenu(!showMenu)} className="ml-6 w-7 p-0">
+          {showMenu ? (
+            <IoClose size={30} className="m-0 p-0" />
+          ) : (
+            <LuMenu size={28} className="m-0 p-0" />
+          )}
         </button>
         {showMenu && (
           <div
             ref={menuRef}
             className={clsx(
-              `h-body absolute top-[60px] z-10 mt-2 h-full w-full origin-top overflow-auto pt-4 shadow-md`,
+              `h-body absolute top-[60px] z-10 mt-2 h-full w-full origin-top pt-4 shadow-md`,
               {
                 ['bg-[rgb(235,235,235)]']: theme === 'light',
                 ['bg-[rgb(30,30,30)]']: theme === 'dark',
+                ['animate-slide-in']: showMenu,
               },
             )}
           >
