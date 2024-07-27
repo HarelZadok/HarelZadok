@@ -28,7 +28,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      setPageWidth(window.innerWidth);
+      setPageWidth(window.outerWidth);
     };
 
     window.addEventListener('resize', handleResize);
@@ -56,7 +56,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-10 h-[70px] w-full flex-shrink-0 shadow-xl">
+    <header className="sticky top-0 z-50 h-[70px] w-full flex-shrink-0 shadow-xl">
       <nav className={`flex w-screen flex-row items-center justify-between py-4`}>
         <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
         <Link className="items-center justify-center font-bold" href="/">
@@ -170,10 +170,10 @@ const Menu = memo(
           <div
             ref={menuRef}
             className={clsx(
-              'absolute left-2 top-[70px] z-50 mt-2 w-48 origin-top-left overflow-hidden rounded-md shadow-md',
+              `h-body absolute top-[60px] z-10 mt-2 h-full w-full origin-top overflow-auto pt-4 shadow-md`,
               {
-                ['bg-[rgb(255,255,255)]']: theme === 'light',
-                ['bg-[rgb(40,40,40)]']: theme === 'dark',
+                ['bg-[rgb(235,235,235)]']: theme === 'light',
+                ['bg-[rgb(30,30,30)]']: theme === 'dark',
               },
             )}
           >
@@ -182,7 +182,7 @@ const Menu = memo(
                 href={option.href}
                 onClick={() => setShowMenu(false)}
                 key={index}
-                className={clsx('block px-4 py-2 text-center text-sm', {
+                className={clsx('block px-4 py-4 text-center text-2xl', {
                   ['hover:bg-gray-100']: theme === 'light',
                   ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
                 })}
@@ -195,7 +195,7 @@ const Menu = memo(
                 toggleTheme!();
                 setShowMenu(false);
               }}
-              className={clsx('block w-full px-4 py-2 text-center text-sm', {
+              className={clsx('block w-full px-4 py-4 text-center text-2xl', {
                 ['hover:bg-gray-100']: theme === 'light',
                 ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
               })}

@@ -17,9 +17,9 @@ export default function AppThemeProvider({ children }: { children: React.ReactNo
 
   return (
     <ThemeProvider>
-      <div className="h-[100dvh] w-full overflow-hidden">
+      <div className="flex h-[100dvh] flex-col">
         <Header />
-        <div className="max-h-[calc(100dvh-70px)] overflow-auto">{children}</div>
+        <div className="w-full flex-1 overflow-auto">{children}</div>
       </div>
     </ThemeProvider>
   );

@@ -42,7 +42,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="mt-5 flex flex-col items-center justify-center p-4 text-center">
+    <div className="h-body flex items-center justify-center p-4 text-center">
       <div
         className={`w-full max-w-2xl rounded-lg p-8 shadow-lg ${theme === 'dark' ? 'bg-[rgb(40,40,40)] text-[rgb(255,255,255)]' : 'bg-[rgb(255,255,255)] text-[rgb(0,0,0)]'}`}
       >

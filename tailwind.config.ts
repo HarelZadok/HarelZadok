@@ -2,7 +2,9 @@ const config: {
   plugins: any[];
   theme: { extend: { backgroundImage: { 'gradient-conic': string; 'gradient-radial': string } } };
   content: string[];
+  important: boolean;
 } = {
+  important: true,
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
