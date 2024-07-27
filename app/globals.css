@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer components {
-    .h-body {
-        @apply h-[calc(100dvh-70px)];
-    }
+  .h-body {
+    @apply h-[calc(100dvh-70px)];
+  }
 }
 
 @layer utilities {
@@ -15,47 +15,49 @@
 }
 
 :root {
-    body, header {
-        background-color: rgb(240, 240, 240);
-        color: black;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #cfcfcf;
-    }
-    
-    ::-webkit-scrollbar-corner {
-        background: #cfcfcf;
-    }
+  body,
+  header {
+    background-color: rgb(240, 240, 240);
+    color: black;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #cfcfcf;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #cfcfcf;
+  }
 }
-  
+
 [data-theme='dark'] {
-    body, header {
-        background-color: rgb(30, 30, 30);
-        color: white;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #333;
-    }
-    
-    ::-webkit-scrollbar-corner {
-        background: #333;
-    }
+  body,
+  header {
+    background-color: rgb(30, 30, 30);
+    color: white;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #333;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #333;
+  }
 }
 
 @media only screen and (min-device-width: 500px) {
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb {
-        background: #777;
-        border-radius: 10px;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: #777;
+    border-radius: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }

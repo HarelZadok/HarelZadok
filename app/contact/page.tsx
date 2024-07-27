@@ -3,6 +3,8 @@
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase/firebaseConfig';
 
 export default function Contact() {
   const { theme } = useTheme();
@@ -25,22 +27,15 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      await addDoc(collection(db, 'contacts'), {...formData, unread: true});
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
       });
-
-      if (response.ok) {
-        setStatus('Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('Failed to send message.');
-      }
+      setStatus('Message sent successfully!');
     } catch (error) {
-      setStatus('An error occurred.');
+      setStatus('An error occurred.' + error);
     } finally {
       setIsSubmitting(false);
     }
@@ -105,7 +100,7 @@ export default function Contact() {
             type="submit"
             disabled={isSubmitting}
             className={clsx(
-              'w-full rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm',
+              'w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm',
               {
                 ['bg-[rgb(50,50,50)]']: theme === 'dark',
                 ['bg-[rgb(240,240,240)]']: theme === 'light',
