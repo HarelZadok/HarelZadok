@@ -150,13 +150,13 @@ const Menu = memo(
     className?: string;
   }) => {
     const { theme } = useTheme();
+    const pathname = usePathname();
 
     const [showMenu, setShowMenu] = useState(false);
 
-    const menuRef = useRef(null);
-    const menuButtonRef = useRef(null);
-
-    useOutsideAlerter([menuRef, menuButtonRef], () => setShowMenu(false));
+    useEffect(() => {
+      setShowMenu(false);
+    }, [pathname]);
 
     if (!show) {
       return null;
@@ -164,7 +164,7 @@ const Menu = memo(
 
     return (
       <div className={clsx('flex items-center', className)}>
-        <button ref={menuButtonRef} onClick={() => setShowMenu(!showMenu)} className="ml-6 w-7 p-0">
+        <button onClick={() => setShowMenu(!showMenu)} className="ml-6 w-7 p-0">
           {showMenu ? (
             <IoClose size={30} className="m-0 p-0" />
           ) : (
@@ -173,7 +173,6 @@ const Menu = memo(
         </button>
         {showMenu && (
           <div
-            ref={menuRef}
             className={clsx(
               `h-body absolute top-[60px] z-10 mt-2 h-full w-full origin-top pt-4 shadow-md`,
               {

@@ -16,7 +16,7 @@ export default function AppThemeProvider({ children }: { children: React.ReactNo
   }
 
   return (
-    <ThemeProvider themes={['light', 'dark']} defaultTheme="light" disableTransitionOnChange>
+    <ThemeProvider themes={['light', 'dark']} defaultTheme="light" disableTransitionOnChange enableColorScheme>
       <div className="flex h-[100dvh] flex-col">
         <Header />
         <div className="w-full flex-1 overflow-auto">{children}</div>
