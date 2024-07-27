@@ -1,19 +1,22 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { Sun, Moon } from 'react-feather';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import { useOutsideAlerter } from '@/lib/hooks';
 import { LuMenu } from 'react-icons/lu';
+import IconComponent from './IconComponent';
+import { usePathname } from 'next/navigation';
+import { PiUserCircleLight } from 'react-icons/pi';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
 
   const [pageWidth, setPageWidth] = useState(window.innerWidth);
 
-  const menuWidth = 600;
+  const menuWidth = 520;
 
   const toggleTheme = () => {
     if (theme === 'dark') {
@@ -52,10 +55,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-10 h-[70px] w-full flex-shrink-0 shadow-xl">
-      <nav className="flex items-center py-4">
+      <nav className={`flex w-screen flex-row items-center justify-between py-4`}>
         <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
-        <Link className="ml-4 text-2xl font-bold" href="/">
-          HarelZadok
+        <Link className="items-center justify-center font-bold" href="/">
+          <IconComponent
+            className={`h-8 w-[6rem] transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'fill-white' : 'fill-[rgb(30,30,30)]'}`}
+          />
         </Link>
         <ExpandedMenu options={navOptions} toggleTheme={toggleTheme} show={pageWidth > menuWidth} />
         <ProfileMenu className="relative mr-6" />
@@ -64,131 +69,147 @@ export default function Header() {
   );
 }
 
-function ExpandedMenu({
-  show,
-  options,
-  toggleTheme,
-  className,
-}: {
-  show?: boolean;
-  options?: { title: string; href: string }[];
-  toggleTheme?: () => void;
-  className?: string;
-}) {
-  const { theme } = useTheme();
+const ExpandedMenu = memo(
+  ({
+    show,
+    options,
+    toggleTheme,
+    className,
+  }: {
+    show?: boolean;
+    options?: { title: string; href: string }[];
+    toggleTheme?: () => void;
+    className?: string;
+  }) => {
+    const { theme } = useTheme();
 
-  if (!show) {
-    return <div className="w-full" />;
-  }
+    const pathname = usePathname();
 
-  const Divider = () => (
-    <div
-      className={clsx('ml-6 mr-2 h-[35px] w-0.5 rounded-full bg-gray-200', {
-        ['bg-gray-500']: theme === 'light',
-      })}
-    />
-  );
+    if (!show) {
+      return null;
+    }
 
-  return (
-    <div className={clsx('flex w-full items-center justify-between', className)}>
-      <div className="flex items-center">
-        <Divider />
-        {options?.map((option, index) => (
-          <Link
-            href={option.href}
-            key={index}
-            className="ml-4 text-lg font-light transition-colors duration-300 ease-in-out hover:text-gray-400"
-          >
-            {option.title}
-          </Link>
-        ))}
-      </div>
-      <>
+    const Divider = () => (
+      <div
+        className={clsx('mr-2 h-[35px] w-0.5 rounded-full bg-gray-200', {
+          ['bg-gray-500']: theme === 'light',
+        })}
+      />
+    );
+
+    return (
+      <div className={clsx('flex w-full items-center justify-between', className)}>
         <div className="flex items-center">
-          {theme === 'dark' ? (
-            <Sun cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
-          ) : (
-            <Moon cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
-          )}
           <Divider />
-        </div>
-      </>
-    </div>
-  );
-}
-
-function Menu({
-  show,
-  options,
-  toggleTheme,
-  className,
-}: {
-  show: boolean;
-  options?: { title: string; href: string }[];
-  toggleTheme?: () => void;
-  className?: string;
-}) {
-  const { theme } = useTheme();
-
-  const [showMenu, setShowMenu] = useState(false);
-
-  const menuRef = useRef(null);
-  const menuButtonRef = useRef(null);
-
-  useOutsideAlerter([menuRef, menuButtonRef], () => setShowMenu(false));
-
-  if (!show) {
-    return null;
-  }
-
-  return (
-    <div className={clsx('flex items-center', className)}>
-      <button ref={menuButtonRef} onClick={() => setShowMenu(!showMenu)} className="ml-6 p-0">
-        <LuMenu size={28} className="m-0 p-0" />
-      </button>
-      {showMenu && (
-        <div
-          ref={menuRef}
-          className={clsx(
-            'absolute left-2 top-[70px] z-50 mt-2 w-48 origin-top-left overflow-hidden rounded-md shadow-md',
-            {
-              ['bg-[rgb(255,255,255)]']: theme === 'light',
-              ['bg-[rgb(40,40,40)]']: theme === 'dark',
-            },
-          )}
-        >
           {options?.map((option, index) => (
             <Link
               href={option.href}
-              onClick={() => setShowMenu(false)}
               key={index}
-              className={clsx('block px-4 py-2 text-center text-sm', {
-                ['hover:bg-gray-100']: theme === 'light',
-                ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
-              })}
+              className={clsx(
+                'ml-4 text-lg font-light underline-offset-[12px] transition-colors duration-300 ease-in-out hover:text-gray-400',
+                {
+                  ['underline']: pathname === option.href,
+                },
+              )}
             >
               {option.title}
             </Link>
           ))}
-          <button
-            onClick={() => {
-              toggleTheme!();
-              setShowMenu(false);
-            }}
-            className={clsx('block w-full px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: theme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
-            })}
-          >
-            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-          </button>
         </div>
-      )}
-    </div>
-  );
-}
+        <>
+          <div className="flex items-center">
+            {theme === 'dark' ? (
+              <Sun cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
+            ) : (
+              <Moon cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
+            )}
+            <div className="mr-6" />
+            <Divider />
+          </div>
+        </>
+      </div>
+    );
+  },
+);
 
-function ProfileMenu({ show = true, className }: { show?: boolean; className?: string }) {
+ExpandedMenu.displayName = 'ExpandedMenu';
+
+const Menu = memo(
+  ({
+    show,
+    options,
+    toggleTheme,
+    className,
+  }: {
+    show: boolean;
+    options?: { title: string; href: string }[];
+    toggleTheme?: () => void;
+    className?: string;
+  }) => {
+    const { theme } = useTheme();
+
+    const [showMenu, setShowMenu] = useState(false);
+
+    const menuRef = useRef(null);
+    const menuButtonRef = useRef(null);
+
+    useOutsideAlerter([menuRef, menuButtonRef], () => setShowMenu(false));
+
+    if (!show) {
+      return null;
+    }
+
+    return (
+      <div className={clsx('flex items-center', className)}>
+        <button ref={menuButtonRef} onClick={() => setShowMenu(!showMenu)} className="ml-6 p-0">
+          <LuMenu size={28} className="m-0 p-0" />
+        </button>
+        {showMenu && (
+          <div
+            ref={menuRef}
+            className={clsx(
+              'absolute left-2 top-[70px] z-50 mt-2 w-48 origin-top-left overflow-hidden rounded-md shadow-md',
+              {
+                ['bg-[rgb(255,255,255)]']: theme === 'light',
+                ['bg-[rgb(40,40,40)]']: theme === 'dark',
+              },
+            )}
+          >
+            {options?.map((option, index) => (
+              <Link
+                href={option.href}
+                onClick={() => setShowMenu(false)}
+                key={index}
+                className={clsx('block px-4 py-2 text-center text-sm', {
+                  ['hover:bg-gray-100']: theme === 'light',
+                  ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
+                })}
+              >
+                {option.title}
+              </Link>
+            ))}
+            <button
+              onClick={() => {
+                toggleTheme!();
+                setShowMenu(false);
+              }}
+              className={clsx('block w-full px-4 py-2 text-center text-sm', {
+                ['hover:bg-gray-100']: theme === 'light',
+                ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
+              })}
+            >
+              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  },
+);
+
+Menu.displayName = 'Menu';
+
+const ProfileMenu = memo(({ show = true, className }: { show?: boolean; className?: string }) => {
   const { theme } = useTheme();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -207,25 +228,11 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
       <button
         ref={profileMenuButtonRef}
         type="button"
-        className="inline-flex items-center rounded-lg bg-transparent p-2 text-sm font-medium text-gray-500"
+        className="ml-2 flex items-center justify-center rounded-lg bg-transparent text-gray-500"
         id="user-menu"
         onClick={() => setShowProfileMenu(!showProfileMenu)}
       >
-        <svg
-          className="h-6 w-6 text-gray-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M3 16l2.29-2.29a1.642 1.642 0 013.02-.707l1.5 1.5a1.5 1.5 0 011.707 0l1.5-1.5a1.642 1.642 0 011.02-.707L20 16.29M6.029 18.437a1.642 1.642 0 010-2.29l-1.5-1.5a1.5 1.5 0 010-1.707l1.5-1.5a1.642 1.642 0 010-2.29 1.642 1.642 0 010 2.29l-1.5 1.5a1.5 1.5 0 010 1.707l1.5 1.5zm4.382 0a1.642 1.642 0 012.29 0l1.5-1.5a1.5 1.5 0 011.707 0l1.5 1.5a1.642 1.642 0 012.29 0l1.5-1.5a1.5 1.5 0 011.707 0l1.5 1.5a1.642 1.642 0 012.29 0"
-          ></path>
-        </svg>
-        <span className="ml-2">Profile</span>
+        <PiUserCircleLight size={38} className="m-0 p-0" />
       </button>
       {showProfileMenu && (
         <div
@@ -274,4 +281,6 @@ function ProfileMenu({ show = true, className }: { show?: boolean; className?: s
       )}
     </div>
   );
-}
+});
+
+ProfileMenu.displayName = 'ProfileMenu';

@@ -4,16 +4,25 @@ import './globals.css';
 import AppThemeProvider from '@/components/AppThemeProvider';
 import { Inter } from 'next/font/google';
 import clsx from 'clsx';
-import '@/lib/firebase/firebaseConfig';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'HarelZadok',
   description: "Harel Zadok's website.",
+  icons: [
+    {
+      media: '(prefers-color-scheme: light)',
+      url: '/icon-light.png',
+      href: '/icon-light.png',
+    },
+    {
+      media: '(prefers-color-scheme: dark)',
+      url: '/icon-dark.png',
+      href: '/icon-dark.png',
+    },
+  ],
 };
-
-
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

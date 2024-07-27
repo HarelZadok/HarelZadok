@@ -27,7 +27,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      await addDoc(collection(db, 'contacts'), {...formData, unread: true});
+      await addDoc(collection(db, 'contacts'), { ...formData, unread: true });
       setFormData({
         name: '',
         email: '',
@@ -42,7 +42,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 text-center">
+    <div className="mt-5 flex flex-col items-center justify-center p-4 text-center">
       <div
         className={`w-full max-w-2xl rounded-lg p-8 shadow-lg ${theme === 'dark' ? 'bg-[rgb(40,40,40)] text-[rgb(255,255,255)]' : 'bg-[rgb(255,255,255)] text-[rgb(0,0,0)]'}`}
       >
