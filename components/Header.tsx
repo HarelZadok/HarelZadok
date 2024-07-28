@@ -62,7 +62,10 @@ export default function Header() {
         <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
         <Link className="items-center justify-center font-bold" href="/">
           <IconComponent
-            className={`h-8 w-[6rem] transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'fill-white' : 'fill-[rgb(30,30,30)]'}`}
+            className={clsx('h-8 w-[6rem] transition-colors duration-500 ease-in-out', {
+              ['fill-[rgb(30,30,30)]']: theme === 'light',
+              ['fill-white']: theme === 'dark',
+            })}
           />
         </Link>
         <ExpandedMenu options={navOptions} toggleTheme={toggleTheme} show={pageWidth > menuWidth} />
