@@ -13,9 +13,5 @@ export default function LoadingIcon({
     return null;
   }
 
-  return (
-    <div className="absolute">
-      <IconComponent className={clsx(className, 'animate-pulse')} />
-    </div>
-  );
+  return <IconComponent className={clsx(className, 'animate-pulse')} />;
 }
