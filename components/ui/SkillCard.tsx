@@ -3,8 +3,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
+import { SkillCardPropTypes } from '@/types/skillCard';
 
-export default function SkillCard({ title, items }: { title: string; items: string[] }) {
+export default function SkillCard({ title, items }: SkillCardPropTypes) {
   const { theme } = useTheme();
 
   return (

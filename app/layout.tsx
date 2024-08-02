@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import './globals.css';
-import AppThemeProvider from '@/components/AppThemeProvider';
+import AppThemeProvider from '@/components/layout/AppThemeProvider';
 import { Inter } from 'next/font/google';
 import clsx from 'clsx';
 

@@ -3,8 +3,10 @@
 import React from 'react';
 import { useTheme } from 'next-themes';
 import clsx from 'clsx';
-import SkillCard from '@/components/SkillCard';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const SkillCard = dynamic(() => import('@/components/ui/SkillCard'));
 
 export default function Home() {
   const { theme } = useTheme();

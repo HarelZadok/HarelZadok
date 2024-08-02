@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import { useOutsideAlerter } from '@/lib/hooks';
 import { LuMenu } from 'react-icons/lu';
-import IconComponent from './IconComponent';
+import IconComponent from '@/public/icon-images/IconComponent';
 import { usePathname } from 'next/navigation';
 import { PiUserCircleLight } from 'react-icons/pi';
 import { IoClose } from 'react-icons/io5';

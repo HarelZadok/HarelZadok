@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useTheme } from 'next-themes';
-import LoadingIcon from '@/components/LoadingIcon';
+import clsx from 'clsx';
+import LoadingIcon from '@/components/ui/LoadingIcon';
 
 export default function Loading() {
   const { theme } = useTheme();
@@ -10,7 +11,10 @@ export default function Loading() {
   return (
     <div className="h-body flex w-full items-center justify-center overflow-hidden">
       <LoadingIcon
-        className={`h-[9rem] w-[12rem] ${theme === 'dark' ? 'fill-white' : 'fill-black'}`}
+        className={clsx('h-[9rem] w-[12rem]', {
+          'fill-black': theme === 'light',
+          'fill-white': theme === 'dark',
+        })}
       />
     </div>
   );

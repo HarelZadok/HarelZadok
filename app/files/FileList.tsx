@@ -3,17 +3,18 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
-import { Notification } from '@/components/Notification';
 import { IoMdRefresh } from 'react-icons/io';
 import { getPublicFiles } from '@/lib/firebase/firebaseActions';
-import LoadingIcon from '@/components/LoadingIcon';
+import { NotificationType } from '@/types/notification';
+import { FileType } from '@/types/file';
+import LoadingIcon from '@/components/ui/LoadingIcon';
+import dynamic from 'next/dynamic';
 
-export default function FileList({ files }: { files: { name: string; url: string }[] }) {
+const Notification = dynamic(() => import('@/components/ui/Notification'));
+
+export default function FileList({ files }: { files: FileType[] }) {
   const { theme } = useTheme();
-  const [notification, setNotification] = useState<{
-    message: string;
-    type: 'success' | 'error';
-  } | null>(null);
+  const [notification, setNotification] = useState<NotificationType | null>(null);
 
   const [loading, setLoading] = useState(false);
 

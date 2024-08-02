@@ -9,7 +9,7 @@ type NotificationProps = {
   onClose: () => void;
 };
 
-export function Notification({ message, type, onClose }: NotificationProps) {
+export default function Notification({ message, type, onClose }: NotificationProps) {
   return (
     <div
       className={clsx(

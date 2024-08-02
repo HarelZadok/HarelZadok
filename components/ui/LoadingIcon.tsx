@@ -1,5 +1,5 @@
 import React from 'react';
-import IconComponent from './IconComponent';
+import IconComponent from '@/public/icon-images/IconComponent';
 import clsx from 'clsx';
 
 export default function LoadingIcon({
