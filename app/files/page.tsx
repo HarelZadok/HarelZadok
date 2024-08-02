@@ -1,3 +1,4 @@
+import Container from '@/components/layout/Container';
 import { getPublicFiles } from '@/lib/firebase/firebaseActions';
 import dynamic from 'next/dynamic';
 import React from 'react';
@@ -8,8 +9,8 @@ export default async function Files() {
   const files = await getPublicFiles();
 
   return (
-    <div className="h-body flex items-center justify-center p-4 text-center">
+    <Container>
       <FileList files={files} />
-    </div>
+    </Container>
   );
 }

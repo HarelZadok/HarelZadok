@@ -11,6 +11,7 @@ import IconComponent from '@/public/icon-images/IconComponent';
 import { usePathname } from 'next/navigation';
 import { PiUserCircleLight } from 'react-icons/pi';
 import { IoClose } from 'react-icons/io5';
+import Divider from '@/components/ui/Divider';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -94,14 +95,6 @@ const ExpandedMenu = memo(
     if (!show) {
       return null;
     }
-
-    const Divider = () => (
-      <div
-        className={clsx('mr-2 h-[35px] w-0.5 rounded-full bg-gray-200', {
-          ['bg-gray-500']: theme === 'light',
-        })}
-      />
-    );
 
     return (
       <div className={clsx('flex w-full items-center justify-between', className)}>
@@ -275,18 +268,18 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
           >
             Settings
           </Link>
-          <button
+          <Link
             onClick={() => {
               setShowProfileMenu(false);
-              alert('Accounts are not supported yet.');
             }}
+            href={'/login'}
             className={clsx('block w-full bg-transparent px-4 py-2 text-center text-sm', {
               ['hover:bg-gray-100']: theme === 'light',
               ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
             Logout
-          </button>
+          </Link>
         </div>
       )}
     </div>

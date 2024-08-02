@@ -44,18 +44,16 @@ header {
   color: var(--color);
 }
 
-@media only screen and (min-device-width: 500px) {
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #777;
-    border-radius: 10px;
-  }
+::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 10px;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

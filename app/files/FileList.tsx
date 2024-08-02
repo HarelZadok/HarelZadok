@@ -41,7 +41,7 @@ export default function FileList({ files }: { files: FileType[] }) {
   };
 
   return (
-    <div className="flex w-full items-center justify-center text-center">
+    <div className="relative">
       {notification && (
         <Notification
           message={notification.message}
@@ -49,59 +49,52 @@ export default function FileList({ files }: { files: FileType[] }) {
           onClose={() => setNotification(null)}
         />
       )}
-      <div
-        className={clsx('relative w-full max-w-5xl rounded-lg p-8 shadow-lg', {
-          ['bg-[rgb(255,255,255)]']: theme === 'light',
-          ['bg-[rgb(40,40,40)]']: theme === 'dark',
-        })}
+      <h1
+        className={`mb-8 text-3xl font-bold ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
       >
-        <h1
-          className={`mb-8 text-3xl font-bold ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
-        >
-          Files
-        </h1>
-        <button className="absolute right-3 top-3 rounded-lg p-2">
-          <IoMdRefresh
-            size={24}
-            onClick={async () => {
-              setLoading(true);
-              files = await getPublicFiles();
-              setLoading(false);
-            }}
-          />
-        </button>
+        Files
+      </h1>
+      <button className="absolute right-0 top-0 rounded-lg p-2">
+        <IoMdRefresh
+          size={24}
+          onClick={async () => {
+            setLoading(true);
+            files = await getPublicFiles();
+            setLoading(false);
+          }}
+        />
+      </button>
 
-        {!loading ? (
-          <ul className="space-y-4">
-            {files.map((file) => (
-              <li
-                key={file.name}
-                className={clsx('flex items-center justify-between rounded-lg p-4 shadow-md', {
-                  ['bg-[rgb(247,247,247)] hover:bg-[rgb(237,237,237)]']: theme === 'light',
-                  ['bg-[rgb(50,50,50)] hover:bg-[rgb(60,60,60)]']: theme === 'dark',
+      {!loading ? (
+        <ul className="space-y-4">
+          {files.map((file) => (
+            <li
+              key={file.name}
+              className={clsx('flex w-full items-center justify-between rounded-lg p-4 shadow-md', {
+                ['bg-[rgb(247,247,247)] hover:bg-[rgb(237,237,237)]']: theme === 'light',
+                ['bg-[rgb(50,50,50)] hover:bg-[rgb(60,60,60)]']: theme === 'dark',
+              })}
+            >
+              <span className="text-lg font-medium">{file.name}</span>
+              <button
+                onClick={() => downloadFileByLink(file.url, file.name)}
+                className={clsx('rounded-lg px-4 py-2 transition-colors', {
+                  ['bg-blue-500 text-white hover:bg-blue-600']: theme === 'light',
+                  ['bg-blue-400 text-white hover:bg-blue-500']: theme === 'dark',
                 })}
               >
-                <span className="text-lg font-medium">{file.name}</span>
-                <button
-                  onClick={() => downloadFileByLink(file.url, file.name)}
-                  className={clsx('rounded-lg px-4 py-2 transition-colors', {
-                    ['bg-blue-500 text-white hover:bg-blue-600']: theme === 'light',
-                    ['bg-blue-400 text-white hover:bg-blue-500']: theme === 'dark',
-                  })}
-                >
-                  Download
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="mt-3 flex items-center justify-center">
-            <LoadingIcon
-              className={`h-[5rem] w-[6rem] ${theme === 'dark' ? 'fill-white' : 'fill-black'}`}
-            />
-          </div>
-        )}
-      </div>
+                Download
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="mt-3 flex items-center justify-center">
+          <LoadingIcon
+            className={`h-[5rem] w-[6rem] ${theme === 'dark' ? 'fill-white' : 'fill-black'}`}
+          />
+        </div>
+      )}
     </div>
   );
 }
