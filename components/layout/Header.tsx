@@ -170,7 +170,7 @@ const Menu = memo(
         {showMenu && (
           <div
             className={clsx(
-              `h-body absolute top-[60px] z-10 mt-2 h-full w-full origin-top pt-4 shadow-md`,
+              `h-body absolute top-[62px] z-10 mt-2 h-full w-full origin-top pt-4 shadow-md`,
               {
                 ['bg-[rgb(235,235,235)]']: theme === 'light',
                 ['bg-[rgb(30,30,30)]']: theme === 'dark',
@@ -181,7 +181,6 @@ const Menu = memo(
             {options?.map((option, index) => (
               <Link
                 href={option.href}
-                onClick={() => setShowMenu(false)}
                 key={index}
                 className={clsx('block px-4 py-4 text-center text-2xl', {
                   ['hover:bg-gray-100']: theme === 'light',
