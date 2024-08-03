@@ -20,26 +20,27 @@ export default function Container({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const innerRefValue = innerRef.current;
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        if (entry.target === innerRef.current) {
+        if (entry.target === innerRefValue) {
           setHeight(`${entry.contentRect.height + 60}px`);
         }
       }
     });
 
-    if (innerRef.current) {
-      observer.observe(innerRef.current);
+    if (innerRefValue) {
+      observer.observe(innerRefValue);
       // Set initial height
-      setHeight(`${innerRef.current.getBoundingClientRect().height}px`);
+      setHeight(`${innerRefValue.getBoundingClientRect().height}px`);
     }
 
     // Show content after initial render
     setIsVisible(true);
 
     return () => {
-      if (innerRef.current) {
-        observer.unobserve(innerRef.current);
+      if (innerRefValue) {
+        observer.unobserve(innerRefValue);
       }
     };
   }, [children]);
