@@ -8,7 +8,7 @@ export default function Divider() {
   const { theme } = useTheme();
   return (
     <div
-      className={clsx('mr-2 h-[35px] w-0.5 rounded-full bg-gray-200', {
+      className={clsx('mx-1 h-[35px] w-0.5 rounded-full bg-gray-200', {
         ['bg-gray-500']: theme === 'light',
       })}
     />

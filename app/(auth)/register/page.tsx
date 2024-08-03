@@ -3,6 +3,12 @@
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
+import { auth } from '@/lib/firebase/firebaseConfig';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import dynamic from 'next/dynamic';
+import { FirebaseError } from 'firebase/app';
+
+const Notification = dynamic(() => import('@/components/ui/Notification'));
 
 export default function Register() {
   const { theme } = useTheme();
@@ -12,6 +18,8 @@ export default function Register() {
     password: '',
     confirmPassword: '',
   });
+  const [error, setError] = useState('');
+  const [showNotification, setShowNotification] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -24,15 +32,42 @@ export default function Register() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setFormData({ username: '', email: '', password: '', confirmPassword: '' });
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setShowNotification(true);
       setIsSubmitting(false);
-    }, 1000);
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password,
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: formData.username,
+      });
+
+      setIsSubmitting(false);
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        setError(e.message);
+      }
+      setShowNotification(true);
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="mt-10">
+      <Notification
+        message={error}
+        type="error"
+        onClose={() => setShowNotification(false)}
+        show={showNotification}
+      />
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-col items-start">
           <label htmlFor="username" className="block text-sm font-medium">
@@ -93,7 +128,7 @@ export default function Register() {
             className={`mt-1 block w-full rounded-md border border-[rgb(200,200,200)] px-3 py-2 shadow-sm focus:border-[rgb(100,100,100)] focus:outline-none focus:ring-[rgb(100,100,100)] sm:text-sm ${theme === 'dark' ? 'bg-[rgb(60,60,60)] text-[rgb(255,255,255)]' : 'bg-[rgb(245,245,245)] text-[rgb(0,0,0)]'}`}
           />
         </div>
-        
+
         <button
           type="submit"
           disabled={isSubmitting}

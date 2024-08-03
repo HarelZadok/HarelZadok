@@ -47,6 +47,7 @@ export default function FileList({ files }: { files: FileType[] }) {
           message={notification.message}
           type={notification.type}
           onClose={() => setNotification(null)}
+          show={notification !== null}
         />
       )}
       <h1
@@ -70,15 +71,18 @@ export default function FileList({ files }: { files: FileType[] }) {
           {files.map((file) => (
             <li
               key={file.name}
-              className={clsx('flex w-full items-center justify-between rounded-lg p-4 shadow-md', {
-                ['bg-[rgb(247,247,247)] hover:bg-[rgb(237,237,237)]']: theme === 'light',
-                ['bg-[rgb(50,50,50)] hover:bg-[rgb(60,60,60)]']: theme === 'dark',
-              })}
+              className={clsx(
+                'flex w-full flex-wrap items-center justify-between rounded-lg p-4 shadow-md',
+                {
+                  ['bg-[rgb(247,247,247)] hover:bg-[rgb(237,237,237)]']: theme === 'light',
+                  ['bg-[rgb(50,50,50)] hover:bg-[rgb(60,60,60)]']: theme === 'dark',
+                },
+              )}
             >
-              <span className="text-lg font-medium">{file.name}</span>
+              <span className="text-wrap break-all text-lg font-medium">{file.name}</span>
               <button
                 onClick={() => downloadFileByLink(file.url, file.name)}
-                className={clsx('rounded-lg px-4 py-2 transition-colors', {
+                className={clsx('break-all rounded-lg px-4 py-2 transition-colors', {
                   ['bg-blue-500 text-white hover:bg-blue-600']: theme === 'light',
                   ['bg-blue-400 text-white hover:bg-blue-500']: theme === 'dark',
                 })}

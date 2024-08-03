@@ -63,7 +63,7 @@ export default function Header() {
         <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
         <Link className="items-center justify-center font-bold" href="/">
           <IconComponent
-            className={clsx('h-8 w-[6rem] transition-colors duration-500 ease-in-out', {
+            className={clsx('h-8 w-[5.5rem] transition-colors duration-500 ease-in-out', {
               ['fill-[rgb(30,30,30)]']: theme === 'light',
               ['fill-white']: theme === 'dark',
             })}
@@ -107,7 +107,7 @@ const ExpandedMenu = memo(
               className={clsx(
                 'ml-4 text-lg font-light underline-offset-[12px] transition-colors duration-300 ease-in-out hover:text-gray-400',
                 {
-                  ['underline']: pathname === option.href,
+                  underline: pathname === option.href,
                 },
               )}
             >
@@ -122,8 +122,9 @@ const ExpandedMenu = memo(
             ) : (
               <Moon cursor="pointer" className="h-6 w-6 text-gray-500" onClick={toggleTheme} />
             )}
-            <div className="mr-6" />
+            <div className="mr-5" />
             <Divider />
+            <div className="mr-2" />
           </div>
         </>
       </div>
@@ -181,6 +182,7 @@ const Menu = memo(
             {options?.map((option, index) => (
               <Link
                 href={option.href}
+                onClick={() => setTimeout(() => setShowMenu(false), 500)}
                 key={index}
                 className={clsx('block px-4 py-4 text-center text-2xl', {
                   ['hover:bg-gray-100']: theme === 'light',
@@ -277,7 +279,7 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
               ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
-            Logout
+            Login
           </Link>
         </div>
       )}

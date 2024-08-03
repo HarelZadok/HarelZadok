@@ -5,15 +5,25 @@ import clsx from 'clsx';
 
 type NotificationProps = {
   message: string;
-  type: 'success' | 'error';
-  onClose: () => void;
+  show: boolean;
+  type?: 'success' | 'error';
+  onClose?: () => void;
 };
 
-export default function Notification({ message, type, onClose }: NotificationProps) {
+export default function Notification({
+  message,
+  show,
+  type = 'success',
+  onClose,
+}: NotificationProps) {
+  if (!show) {
+    return null;
+  }
+
   return (
     <div
       className={clsx(
-        `absolute bottom-6 flex items-center justify-between rounded px-4 py-2 text-white shadow-lg`,
+        'absolute bottom-6 right-6 ml-6 flex items-center justify-between rounded px-4 py-2 text-white shadow-lg',
         {
           'bg-green-500': type === 'success',
           'bg-red-500': type === 'error',
