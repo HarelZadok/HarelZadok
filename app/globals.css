@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer components {
-    .h-body {
-        @apply h-[calc(100dvh-70px)];
-    }
+  .h-body {
+    @apply min-h-[calc(100dvh-70px)];
+  }
 }
 
 @layer utilities {
@@ -14,18 +14,46 @@
   }
 }
 
-@media only screen and (min-device-width: 500px) {
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
+:root {
+  --theme-color: rgb(235, 235, 235);
+  --color: black;
+  --scrollbar-background: #cfcfcf;
+}
 
-    ::-webkit-scrollbar-thumb {
-        background: #777;
-        border-radius: 10px;
-    }
+[data-theme='dark'] {
+  --theme-color: rgb(30, 30, 30);
+  --color: white;
+  --scrollbar-background: #333;
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-background);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-background);
+}
+
+body {
+  background-color: var(--theme-color);
+  color: var(--color);
+}
+
+header {
+  background-color: var(--theme-color);
+  color: var(--color);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

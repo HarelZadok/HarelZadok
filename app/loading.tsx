@@ -1,18 +1,20 @@
 'use client';
 
 import React from 'react';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
-import { GooSpinner } from 'react-spinners-kit';
+import { useTheme } from 'next-themes';
+import clsx from 'clsx';
+import LoadingIcon from '@/components/ui/LoadingIcon';
 
 export default function Loading() {
-  const themeSwitcher = useThemeSwitcher();
+  const { theme } = useTheme();
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden">
-      <GooSpinner
-        size={7}
-        sizeUnit="rem"
-        color={themeSwitcher.currentTheme === 'dark' ? '#fff' : '#000'}
+    <div className="h-body flex w-full items-center justify-center overflow-hidden">
+      <LoadingIcon
+        className={clsx('h-[9rem] w-[12rem]', {
+          'fill-black': theme === 'light',
+          'fill-white': theme === 'dark',
+        })}
       />
     </div>
   );
