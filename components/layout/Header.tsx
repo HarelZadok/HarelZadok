@@ -12,6 +12,7 @@ import { usePathname } from 'next/navigation';
 import { PiUserCircleLight } from 'react-icons/pi';
 import { IoClose } from 'react-icons/io5';
 import Divider from '@/components/ui/Divider';
+import { isUserLoggedIn, logoutUser, onUserStateChanged } from '@/lib/firebase/firebaseActions';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -217,6 +218,17 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
   const { theme } = useTheme();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [loginButtonText, setLoginButtonText] = useState('Login');
+
+  useEffect(() => {
+    return onUserStateChanged((userLoggedIn) => {
+      if (userLoggedIn) {
+        setLoginButtonText('Logout');
+      } else {
+        setLoginButtonText('Login');
+      }
+    });
+  }, [setLoginButtonText]);
 
   const profileMenuRef = useRef(null);
   const profileMenuButtonRef = useRef(null);
@@ -249,28 +261,33 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
             },
           )}
         >
-          <Link
-            href="/profile"
-            onClick={() => setShowProfileMenu(false)}
-            className={clsx('block px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: theme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
-            })}
-          >
-            Your Profile
-          </Link>
-          <Link
-            href="/settings"
-            onClick={() => setShowProfileMenu(false)}
-            className={clsx('block px-4 py-2 text-center text-sm', {
-              ['hover:bg-gray-100']: theme === 'light',
-              ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
-            })}
-          >
-            Settings
-          </Link>
+          {isUserLoggedIn() && (
+            <>
+              <Link
+                href="/profile"
+                onClick={() => setShowProfileMenu(false)}
+                className={clsx('block px-4 py-2 text-center text-sm', {
+                  ['hover:bg-gray-100']: theme === 'light',
+                  ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
+                })}
+              >
+                Your Profile
+              </Link>
+              <Link
+                href="/settings"
+                onClick={() => setShowProfileMenu(false)}
+                className={clsx('block px-4 py-2 text-center text-sm', {
+                  ['hover:bg-gray-100']: theme === 'light',
+                  ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
+                })}
+              >
+                Settings
+              </Link>
+            </>
+          )}
           <Link
             onClick={() => {
+              if (isUserLoggedIn()) logoutUser();
               setShowProfileMenu(false);
             }}
             href={'/login'}
@@ -279,7 +296,7 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
               ['hover:bg-[rgb(50,50,50)]']: theme === 'dark',
             })}
           >
-            Login
+            {loginButtonText}
           </Link>
         </div>
       )}

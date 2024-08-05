@@ -6,12 +6,13 @@ import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebaseConfig';
 import Container from '@/components/layout/Container';
+import { getLoggedUser, isUserLoggedIn } from '@/lib/firebase/firebaseActions';
 
 export default function Contact() {
   const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: isUserLoggedIn() ? getLoggedUser()?.email as string : '',
     message: '',
   });
 

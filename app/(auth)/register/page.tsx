@@ -3,10 +3,9 @@
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
-import { auth } from '@/lib/firebase/firebaseConfig';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import dynamic from 'next/dynamic';
 import { FirebaseError } from 'firebase/app';
+import { registerUser } from '@/lib/firebase/firebaseActions';
 
 const Notification = dynamic(() => import('@/components/ui/Notification'));
 
@@ -20,7 +19,6 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [showNotification, setShowNotification] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,15 +38,7 @@ export default function Register() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password,
-      );
-
-      await updateProfile(userCredential.user, {
-        displayName: formData.username,
-      });
+      await registerUser(formData.email, formData.password);
 
       setIsSubmitting(false);
     } catch (e) {
