@@ -1,16 +1,10 @@
 'use client';
 
 import React from 'react';
-import { onUserStateChanged } from '@/lib/firebase/firebaseActions';
-import { useRouter } from 'next/navigation';
+import { useCheckUserValidity } from '@/lib/hooks';
 
 export default function AuthForm({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  onUserStateChanged((userLoggedIn) => {
-    if (userLoggedIn) {
-			router.replace('/');
-    }
-  });
+  useCheckUserValidity(true);
 
   return children;
 }

@@ -51,7 +51,7 @@ export default function FileList({ files }: { files: FileType[] }) {
         />
       )}
       <h1
-        className={`mb-8 text-3xl font-bold ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
+        className={`mb-8 text-3xl font-medium ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
       >
         Files
       </h1>
