@@ -14,7 +14,7 @@ export default function Home() {
     <Container maxWidth="72rem">
       {/* Hero Section */}
       <section className="mb-12 text-center">
-        <h1 className="mb-4 text-5xl font-bold">Hi, I&apos;m Harel Zadok</h1>
+        <h1 className="mb-4 text-5xl font-semibold">Hi, I&apos;m Harel Zadok</h1>
         <p className="mb-6 text-xl">
           A passionate software engineer from Israel, specializing in creating innovative and
           user-centric applications.

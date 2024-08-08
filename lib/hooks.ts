@@ -1,4 +1,6 @@
 import { MutableRefObject, useEffect } from 'react';
+import { onUserStateChanged } from './firebase/firebaseActions';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function useOutsideAlerter(
   refs: MutableRefObject<HTMLElement | null>[],
@@ -20,4 +22,20 @@ export function useOutsideAlerter(
       document.removeEventListener('mouseup', handleClickOutside);
     };
   }, [refs, callback]);
+}
+
+export function useCheckUserValidity(moveOnValid: boolean = false) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    return onUserStateChanged((isUserLoggedIn) => {
+      if (!isUserLoggedIn) {
+        pathname !== '/login' && pathname !== '/register'
+          && router.replace('/login');
+      } else if (moveOnValid) {
+        router.replace('/');
+      }
+    });
+  }, [router, moveOnValid, pathname]);
 }

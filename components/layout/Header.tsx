@@ -17,7 +17,7 @@ import { isUserLoggedIn, logoutUser, onUserStateChanged } from '@/lib/firebase/f
 export default function Header() {
   const { theme, setTheme } = useTheme();
 
-  const [pageWidth, setPageWidth] = useState(window.innerWidth);
+  const [pageWidth, setPageWidth] = useState(window.outerWidth);
 
   const menuWidth = 520;
 

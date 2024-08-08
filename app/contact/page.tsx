@@ -12,7 +12,7 @@ export default function Contact() {
   const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
-    email: isUserLoggedIn() ? getLoggedUser()?.email as string : '',
+    email: isUserLoggedIn() ? (getLoggedUser()?.email as string) : '',
     message: '',
   });
 
@@ -46,7 +46,7 @@ export default function Contact() {
   return (
     <Container maxWidth="42rem">
       <h1
-        className={`mb-8 text-3xl font-bold ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
+        className={`mb-8 text-3xl font-medium ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
       >
         Contact Us
       </h1>
