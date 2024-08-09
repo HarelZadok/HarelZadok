@@ -1,17 +1,23 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { updateUserProfile, getLoggedUser } from '@/lib/firebase/firebaseActions';
+import {
+  updateUserProfile,
+  updateUserPassword,
+  getLoggedUser,
+} from '@/lib/firebase/firebaseActions';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useCheckUserValidity } from '@/lib/hooks';
+import { FirebaseError } from 'firebase/app';
 
 export default function EditProfile() {
   const { theme } = useTheme();
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
   const [pageWidth, setPageWidth] = useState(window.outerWidth);
@@ -51,12 +57,14 @@ export default function EditProfile() {
 
     try {
       await updateUserProfile({ displayName, email });
+      await updateUserPassword(password);
+
       router.replace('/profile');
     } catch (error) {
-      console.error('Error updating profile:', error);
-      setStatus('An error occurred while updating your profile.');
-    } finally {
-      setIsSubmitting(false);
+      if (error instanceof FirebaseError) {
+        setStatus(error.message);
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -84,8 +92,8 @@ export default function EditProfile() {
         </h1>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="username" className="block text-sm font-medium">
+        <div className="flex flex-col">
+          <label htmlFor="username" className="mb-1 ml-1 block self-start text-sm font-medium">
             Username
           </label>
           <input
@@ -102,8 +110,8 @@ export default function EditProfile() {
           />
         </div>
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium">
+        <div className="flex flex-col">
+          <label htmlFor="email" className="mb-1 ml-1 block self-start text-sm font-medium">
             Email
           </label>
           <input
@@ -120,6 +128,27 @@ export default function EditProfile() {
           />
         </div>
 
+        <div className="flex flex-col">
+          <label htmlFor="password" className="mb-1 ml-1 block self-start text-sm font-medium">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={clsx(
+              'mt-1 block w-full rounded-md border px-3 py-2 shadow-sm sm:text-sm',
+              theme === 'dark'
+                ? 'border-[rgb(200,200,200)] bg-[rgb(60,60,60)] text-[rgb(255,255,255)] focus:border-[rgb(100,100,100)] focus:ring-[rgb(100,100,100)]'
+                : 'border-[rgb(200,200,200)] bg-[rgb(245,245,245)] text-[rgb(0,0,0)] focus:border-[rgb(100,100,100)] focus:ring-[rgb(100,100,100)]',
+            )}
+          />
+          <div className="mt-2 text-sm text-gray-500">
+            Note: If you change your password, you will need to re-enter it on your next login.
+          </div>
+        </div>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -130,13 +159,7 @@ export default function EditProfile() {
         >
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
-        {status && (
-          <p
-            className={`mt-4 text-sm ${theme === 'dark' ? 'text-[rgb(255,255,255)]' : 'text-[rgb(0,0,0)]'}`}
-          >
-            {status}
-          </p>
-        )}
+        {status && <p className={'text-center text-sm text-red-500'}>{status}</p>}
       </form>
     </div>
   );

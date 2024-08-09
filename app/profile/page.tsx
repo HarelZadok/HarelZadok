@@ -24,6 +24,7 @@ export default function Profile() {
       <div className="mt-8 flex w-full flex-col items-start">
         <p>Username: {user?.displayName}</p>
         <p>Email: {user?.email}</p>
+        <p>UID: {user?.uid}</p>
         <button
           onClick={handleEditProfile}
           className="mt-8 flex items-center self-end text-blue-500 transition-colors duration-300 hover:text-blue-600"

@@ -15,8 +15,8 @@ const Notification = dynamic(() => import('@/components/ui/Notification'));
 export default function FileList({ files }: { files: FileType[] }) {
   const { theme } = useTheme();
   const [notification, setNotification] = useState<NotificationType | null>(null);
-
   const [loading, setLoading] = useState(false);
+  const refreshButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const downloadFileByLink = async (url: string, name: string) => {
     const res = await fetch(url);
@@ -55,13 +55,18 @@ export default function FileList({ files }: { files: FileType[] }) {
       >
         Files
       </h1>
-      <button className="absolute right-0 top-0 rounded-lg p-2">
+      <button
+        ref={refreshButtonRef}
+        className="absolute right-0 top-0 rounded-lg p-2 transition-transform duration-300 ease-in-out"
+      >
         <IoMdRefresh
           size={24}
           onClick={async () => {
             setLoading(true);
+            refreshButtonRef.current?.classList.add('rotate-[360deg]');
             files = await getPublicFiles();
             setLoading(false);
+            refreshButtonRef.current?.classList.remove('rotate-[360deg]');
           }}
         />
       </button>

@@ -31,8 +31,7 @@ export function useCheckUserValidity(moveOnValid: boolean = false) {
   useEffect(() => {
     return onUserStateChanged((isUserLoggedIn) => {
       if (!isUserLoggedIn) {
-        pathname !== '/login' && pathname !== '/register'
-          && router.replace('/login');
+        pathname !== '/login' && pathname !== '/register' && router.replace('/login');
       } else if (moveOnValid) {
         router.replace('/');
       }

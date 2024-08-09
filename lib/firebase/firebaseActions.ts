@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   updateEmail,
+  updatePassword,
   updateProfile,
   User,
 } from 'firebase/auth';
@@ -69,7 +70,13 @@ export function onUserStateChanged(callback: (isUserLoggedIn: boolean, user: Use
   });
 }
 
-export async function updateUserProfile({ displayName, email }: { displayName?: string; email?: string }) {
+export async function updateUserProfile({
+  displayName,
+  email,
+}: {
+  displayName?: string;
+  email?: string;
+}) {
   const user = auth.currentUser;
 
   if (!user) {
@@ -77,14 +84,33 @@ export async function updateUserProfile({ displayName, email }: { displayName?: 
   }
 
   const updates = [];
-  
+
   if (displayName !== undefined && user.displayName !== displayName) {
     updates.push(updateProfile(user, { displayName }));
   }
-  
+
   if (email !== undefined && user.email !== email) {
     updates.push(updateEmail(user, email));
   }
-  
+
   await Promise.all(updates);
+}
+
+export async function updateUserPassword(newPassword: string) {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error('No user is currently signed in.');
+  }
+
+  if (newPassword === undefined || newPassword.length === 0) {
+    return;
+  }
+
+  try {
+    await updatePassword(user, newPassword);
+  }
+  catch (error) {
+    throw error as FirebaseError;
+  }
 }

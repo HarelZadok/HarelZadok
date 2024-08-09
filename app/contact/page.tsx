@@ -51,8 +51,8 @@ export default function Contact() {
         Contact Us
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium">
+        <div className="flex flex-col">
+          <label htmlFor="name" className="mb-1 ml-1 block self-start text-sm font-medium">
             Name
           </label>
           <input
@@ -66,8 +66,8 @@ export default function Contact() {
           />
         </div>
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium">
+        <div className="flex flex-col">
+          <label htmlFor="email" className="mb-1 ml-1 block self-start text-sm font-medium">
             Email
           </label>
           <input
@@ -81,8 +81,8 @@ export default function Contact() {
           />
         </div>
 
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium">
+        <div className="flex flex-col">
+          <label htmlFor="message" className="mb-1 ml-1 block self-start text-sm font-medium">
             Message
           </label>
           <textarea
