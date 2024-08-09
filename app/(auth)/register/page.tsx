@@ -3,11 +3,8 @@
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import { FirebaseError } from 'firebase/app';
 import { registerUser } from '@/lib/firebase/firebaseActions';
-
-const Notification = dynamic(() => import('@/components/ui/Notification'));
 
 export default function Register() {
   const { theme } = useTheme();
@@ -17,8 +14,7 @@ export default function Register() {
     password: '',
     confirmPassword: '',
   });
-  const [error, setError] = useState('');
-  const [showNotification, setShowNotification] = useState(false);
+  const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,10 +25,10 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setShowNotification(true);
+      setStatus('Passwords do not match');
       setIsSubmitting(false);
       return;
     }
@@ -43,21 +39,14 @@ export default function Register() {
       setIsSubmitting(false);
     } catch (e) {
       if (e instanceof FirebaseError) {
-        setError(e.message);
+        setStatus(e.message);
+        setIsSubmitting(false);
       }
-      setShowNotification(true);
-      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="mt-10">
-      <Notification
-        message={error}
-        type="error"
-        onClose={() => setShowNotification(false)}
-        show={showNotification}
-      />
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-col items-start">
           <label htmlFor="username" className="block text-sm font-medium">
@@ -132,6 +121,7 @@ export default function Register() {
         >
           {isSubmitting ? 'Registering...' : 'Register'}
         </button>
+        {status && <p className="text-center text-sm text-red-500">{status}</p>}
       </form>
     </div>
   );

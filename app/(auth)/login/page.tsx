@@ -2,6 +2,7 @@
 
 import { loginUser } from '@/lib/firebase/firebaseActions';
 import clsx from 'clsx';
+import { FirebaseError } from 'firebase/app';
 import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
 
@@ -11,6 +12,7 @@ export default function Login() {
     email: '',
     password: '',
   });
+  const [status, setStatus] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +23,15 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus('');
 
     try {
       await loginUser(formData.email, formData.password);
       setIsSubmitting(false);
     } catch (error) {
-      console.error(error);
+      if (error instanceof FirebaseError) {
+        setStatus(error.message);
+      }
       setIsSubmitting(false);
     }
   };
@@ -76,6 +81,7 @@ export default function Login() {
         >
           {isSubmitting ? 'Logging in...' : 'Login'}
         </button>
+        {status && <p className={'text-center text-sm text-red-500'}>{status}</p>}
       </form>
     </div>
   );
