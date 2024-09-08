@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ramonak/react-progress-bar": "^5.2.0",
     "clsx": "^2.1.1",
     "firebase": "^10.12.4",
     "next": "14.2.5",
@@ -17,7 +18,8 @@
     "react-dom": "^18",
     "react-feather": "^2.0.10",
     "react-icons": "^5.2.1",
-    "react-spinners-kit": "^1.9.1"
+    "react-spinners-kit": "^1.9.1",
+    "use-file-picker": "^2.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",

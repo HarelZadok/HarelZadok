@@ -1,6 +1,6 @@
 import { FileType } from '@/types/file';
 import { storage, auth } from './firebaseConfig';
-import { ref, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -28,6 +28,11 @@ export async function getPublicFiles() {
   );
 
   return files;
+}
+
+export function uploadPublicFile(file: File) {
+  const uploadRef = ref(storage, `files/public/${file.name}`);
+  return uploadBytesResumable(uploadRef, file);
 }
 
 export function isUserLoggedIn() {
@@ -109,8 +114,7 @@ export async function updateUserPassword(newPassword: string) {
 
   try {
     await updatePassword(user, newPassword);
-  }
-  catch (error) {
+  } catch (error) {
     throw error as FirebaseError;
   }
 }
