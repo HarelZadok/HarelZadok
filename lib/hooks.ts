@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect } from 'react';
-import { onUserStateChanged } from './firebase/firebaseActions';
+import { getLoggedUser, onUserStateChanged } from './firebase/firebaseActions';
 import { usePathname, useRouter } from 'next/navigation';
 
 export function useOutsideAlerter(
@@ -37,4 +37,8 @@ export function useCheckUserValidity(moveOnValid: boolean = false) {
       }
     });
   }, [router, moveOnValid, pathname]);
+}
+
+export function useIsAdmin() {
+  return getLoggedUser()?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 }
