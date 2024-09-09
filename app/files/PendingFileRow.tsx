@@ -42,7 +42,7 @@ export default function PendingFileRow({
       clearInterval(interval);
       unsubscribe();
     };
-  }, []);
+  }, [isCanceled, uploadTask]);
 
   return (
     <li
@@ -66,6 +66,10 @@ export default function PendingFileRow({
             completed={`${((bytesTransferred / uploadTask.snapshot.totalBytes) * 100).toFixed(0)}`}
             maxCompleted={100}
             bgColor="#3b82f6"
+            labelSize="12px"
+            labelAlignment="center"
+            height="16px"
+            borderRadius="6px"
           />
           <button
             className="hover:text-green-500"

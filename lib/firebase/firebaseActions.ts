@@ -30,8 +30,43 @@ export async function getPublicFiles() {
   return files;
 }
 
+export async function getPrivateFiles() {
+  if (!auth.currentUser) {
+    throw new Error('No user is currently signed in.');
+  }
+
+  const uid = auth.currentUser.uid;
+
+  const listRef = ref(storage, `files/private/${uid}`);
+  const res = await listAll(listRef);
+
+  const files = await Promise.all(
+    res.items.map(async (itemRef) => {
+      const url = await getDownloadURL(itemRef);
+
+      return <FileType>{
+        name: itemRef.name,
+        url: url,
+      };
+    }),
+  );
+
+  return files;
+}
+
 export function uploadPublicFile(file: File) {
   const uploadRef = ref(storage, `files/public/${file.name}`);
+  return uploadBytesResumable(uploadRef, file);
+}
+
+export function uploadPrivateFile(file: File) {
+  if (!auth.currentUser) {
+    throw new Error('No user is currently signed in.');
+  }
+
+  const uid = auth.currentUser.uid;
+
+  const uploadRef = ref(storage, `files/private/${uid}/${file.name}`);
   return uploadBytesResumable(uploadRef, file);
 }
 
