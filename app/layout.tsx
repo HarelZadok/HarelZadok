@@ -4,6 +4,7 @@ import './globals.css';
 import AppThemeProvider from '@/components/layout/AppThemeProvider';
 import { Inter } from 'next/font/google';
 import clsx from 'clsx';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(inter.className)}>
         <AppThemeProvider>{children}</AppThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
