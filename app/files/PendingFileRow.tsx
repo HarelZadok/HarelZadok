@@ -31,7 +31,7 @@ export default function PendingFileRow({
         setUploadState(snapshot.state);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       },
       () => {
         setUploadState('success');

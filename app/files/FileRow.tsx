@@ -1,3 +1,4 @@
+import { useContextMenuItemAdder } from '@/lib/hooks';
 import { FileType } from '@/types/file';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
@@ -5,11 +6,10 @@ import React from 'react';
 
 export default function FileRow({ file }: { file: FileType }) {
   const { theme } = useTheme();
+  const customItemAdder = useContextMenuItemAdder();
 
   const downloadFileByLink = async (url: string, name: string) => {
     const res = await fetch(url);
-
-    console.log(res);
 
     if (!res.ok || res.status !== 200) return;
 
@@ -32,6 +32,14 @@ export default function FileRow({ file }: { file: FileType }) {
           ['bg-[rgb(50,50,50)] hover:bg-[rgb(60,60,60)]']: theme === 'dark',
         },
       )}
+      onContextMenu={() => {
+        customItemAdder([
+          {
+            name: 'Download',
+            callback: () => downloadFileByLink(file.url, file.name),
+          },
+        ]);
+      }}
     >
       <span className="text-wrap break-all text-lg font-medium">{file.name}</span>
       <button
