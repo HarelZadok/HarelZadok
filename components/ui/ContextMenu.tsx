@@ -30,11 +30,11 @@ export default function ContextMenu(props: ContextMenuProps) {
 
   const activeElement = document.activeElement;
 
+  const { theme } = useTheme();
+
   if (!props.show) {
     return null;
   }
-
-  const { theme } = useTheme();
 
   return (
     <div
@@ -142,7 +142,6 @@ const TextManipulationMenu = ({
 
 const CustomItems = ({
   menuProps,
-  activeElement,
 }: {
   menuProps: ContextMenuProps;
   activeElement: Element | null;
@@ -157,7 +156,7 @@ const CustomItems = ({
     <>
       <div className="mx-1 my-1 h-px bg-gray-600" />
       {menuProps.customItems.map((item) => (
-        <MenuButton setShow={menuProps.setShow} onClick={item.callback}>
+        <MenuButton key={item.name} setShow={menuProps.setShow} onClick={item.callback}>
           {item.name}
         </MenuButton>
       ))}
