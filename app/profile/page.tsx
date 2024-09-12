@@ -1,14 +1,13 @@
 'use client';
 
 import { FiEdit } from 'react-icons/fi';
-import React, { useState } from 'react';
-import { getLoggedUser } from '@/lib/firebase/firebaseActions';
-import { User } from 'firebase/auth';
+import React from 'react';
+import { useAuth } from '@/lib/firebase/firebaseActions';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckUserValidity } from '@/lib/hooks';
 
 export default function Profile() {
-  const [user] = useState<User | null>(getLoggedUser());
+  const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 

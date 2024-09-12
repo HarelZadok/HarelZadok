@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {
   updateUserProfile,
   updateUserPassword,
-  getLoggedUser,
+  useAuth,
 } from '@/lib/firebase/firebaseActions';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
@@ -15,6 +15,9 @@ import { FirebaseError } from 'firebase/app';
 
 export default function EditProfile() {
   const { theme } = useTheme();
+
+  const { user } = useAuth();
+
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,13 +45,12 @@ export default function EditProfile() {
   }, [setPageWidth]);
 
   useEffect(() => {
-    const currentUser = getLoggedUser();
     setMounted(true);
-    if (currentUser) {
-      setDisplayName(currentUser.displayName || '');
-      setEmail(currentUser.email || '');
+    if (user) {
+      setDisplayName(user.displayName || '');
+      setEmail(user.email || '');
     }
-  }, []);
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

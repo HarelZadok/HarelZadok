@@ -2,19 +2,25 @@
 
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebaseConfig';
 import Container from '@/components/layout/Container';
-import { getLoggedUser, isUserLoggedIn } from '@/lib/firebase/firebaseActions';
+import { useAuth } from '@/lib/firebase/firebaseActions';
 
 export default function Contact() {
   const { theme } = useTheme();
+  const { isSignedIn, user, checked } = useAuth();
+
   const [formData, setFormData] = useState({
     name: '',
-    email: isUserLoggedIn() ? (getLoggedUser()?.email as string) : '',
+    email: isSignedIn ? (user?.email as string) : '',
     message: '',
   });
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, email: isSignedIn ? (user?.email as string) : '' }));
+  }, [checked, isSignedIn, user]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
