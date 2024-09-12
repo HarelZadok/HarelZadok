@@ -11,14 +11,14 @@ import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'HarelZadok',
   openGraph: {
     type: 'website',
-    title: 'HarelZadok',
+    title: 'HarelZadok' + (window.location.hostname.startsWith('beta') ? ' (Beta)' : ''),
     description: "Harel Zadok's website.",
     url: 'https://www.harelzadok.com',
     images: ['https://www.harelzadok.com/icon-images/icon-light.png'],
   },
+  title: 'HarelZadok',
   description: "Harel Zadok's website.",
   icons: [
     {
