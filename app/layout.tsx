@@ -1,11 +1,12 @@
 import React from 'react';
+import '@/lib/firebase/firebaseConfig';
 import type { Metadata } from 'next';
 import './globals.css';
 import AppThemeProvider from '@/components/layout/AppThemeProvider';
 import { Inter } from 'next/font/google';
 import clsx from 'clsx';
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,8 +32,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(inter.className)}>
         <AppThemeProvider>{children}</AppThemeProvider>
-        <SpeedInsights />
-        <Analytics />
+        <SpeedInsights debug={false} />
+        <Analytics debug={false} />
       </body>
     </html>
   );

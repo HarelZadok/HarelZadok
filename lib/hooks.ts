@@ -1,5 +1,5 @@
 import { MutableRefObject, useContext, useEffect } from 'react';
-import { getLoggedUser, onUserStateChanged } from './firebase/firebaseActions';
+import { onUserStateChanged, useAuth } from './firebase/firebaseActions';
 import { usePathname, useRouter } from 'next/navigation';
 import { ContextMenuContext } from '@/components/layout/AppThemeProvider';
 
@@ -41,7 +41,8 @@ export function useCheckUserValidity(moveOnValid: boolean = false) {
 }
 
 export function useIsAdmin() {
-  return getLoggedUser()?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+  const { user } = useAuth();
+  return user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 }
 
 export function useContextMenuItemAdder() {

@@ -12,7 +12,7 @@ import { usePathname } from 'next/navigation';
 import { PiUserCircleLight } from 'react-icons/pi';
 import { IoClose } from 'react-icons/io5';
 import Divider from '@/components/ui/Divider';
-import { isUserLoggedIn, logoutUser, onUserStateChanged } from '@/lib/firebase/firebaseActions';
+import { useAuth, logoutUser, onUserStateChanged } from '@/lib/firebase/firebaseActions';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -216,6 +216,7 @@ Menu.displayName = 'Menu';
 
 const ProfileMenu = memo(({ show = true, className }: { show?: boolean; className?: string }) => {
   const { theme } = useTheme();
+  const { isSignedIn } = useAuth();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [loginButtonText, setLoginButtonText] = useState('Login');
@@ -261,7 +262,7 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
             },
           )}
         >
-          {isUserLoggedIn() && (
+          {isSignedIn && (
             <>
               <Link
                 href="/profile"
@@ -287,7 +288,7 @@ const ProfileMenu = memo(({ show = true, className }: { show?: boolean; classNam
           )}
           <Link
             onClick={() => {
-              if (isUserLoggedIn()) logoutUser();
+              if (isSignedIn) logoutUser();
               setShowProfileMenu(false);
             }}
             href={'/login'}

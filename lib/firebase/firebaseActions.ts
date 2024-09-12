@@ -11,6 +11,7 @@ import {
   User,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+import { useEffect, useState } from 'react';
 
 export async function getPublicFiles() {
   const listRef = ref(storage, 'files/public');
@@ -70,12 +71,42 @@ export function uploadPrivateFile(file: File) {
   return uploadBytesResumable(uploadRef, file);
 }
 
+/**
+ * @deprecated
+ * Use `useAuth()` hook instead.
+ */
 export function isUserLoggedIn() {
   return auth.currentUser !== null;
 }
 
+/**
+ * @deprecated
+ * Use `useAuth()` hook instead.
+ */
 export function getLoggedUser() {
   return auth.currentUser;
+}
+
+export function useAuth() {
+  const [state, setState] = useState<{ isSignedIn: boolean; user: User | null; checked: boolean }>({
+    isSignedIn: false,
+    user: null,
+    checked: false,
+  });
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setState({
+        isSignedIn: user !== null,
+        user: user,
+        checked: true,
+      });
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return { auth, ...state };
 }
 
 export async function logoutUser() {
@@ -106,7 +137,7 @@ export async function registerUser(email: string, password: string) {
 
 export function onUserStateChanged(callback: (isUserLoggedIn: boolean, user: User | null) => void) {
   return onAuthStateChanged(auth, () => {
-    callback(isUserLoggedIn(), auth.currentUser);
+    callback(auth.currentUser !== null, auth.currentUser);
   });
 }
 
