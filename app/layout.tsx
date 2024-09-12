@@ -7,7 +7,6 @@ import { Inter } from 'next/font/google';
 import clsx from 'clsx';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import { isBeta } from '@/lib/IsBeta';
 
 const inter = Inter({ subsets: ['latin'] });
 
