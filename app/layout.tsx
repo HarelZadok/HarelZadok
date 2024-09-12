@@ -36,10 +36,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  if (isBeta()) {
-    console.log('Beta');
-  }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(inter.className)}>
