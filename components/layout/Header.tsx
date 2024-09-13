@@ -62,13 +62,17 @@ export default function Header() {
     <header className="sticky top-0 z-50 h-[70px] w-full flex-shrink-0 shadow-xl">
       <nav className={`flex w-screen flex-row items-center justify-between py-4`}>
         <Menu show={pageWidth <= menuWidth} options={navOptions} toggleTheme={toggleTheme} />
-        <Link className="items-center justify-center font-bold" href="/">
-          <IconComponent
-            className={clsx('h-8 w-[5.5rem] transition-colors duration-500 ease-in-out', {
-              ['fill-[rgb(30,30,30)]']: theme === 'light',
-              ['fill-white']: theme === 'dark',
-            })}
-          />
+        <Link className="items-center justify-center py-1 font-bold" href="/">
+          <div className="flex w-[5.5rem] items-center justify-center">
+            <div className="flex w-min items-center justify-center" id="logo">
+              <IconComponent
+                className={clsx('h-8 w-9 transition-colors duration-500 ease-in-out', {
+                  ['fill-[rgb(30,30,30)]']: theme === 'light',
+                  ['fill-white']: theme === 'dark',
+                })}
+              />
+            </div>
+          </div>
         </Link>
         <ExpandedMenu options={navOptions} toggleTheme={toggleTheme} show={pageWidth > menuWidth} />
         <ProfileMenu className="relative mr-6" />
@@ -92,6 +96,45 @@ const ExpandedMenu = memo(
     const { theme } = useTheme();
 
     const pathname = usePathname();
+    const activeOption = useRef<HTMLAnchorElement | null>(null);
+    const activeBox = useRef<HTMLDivElement | null>(null);
+
+    const initActiveBox = () => {
+      if (!activeBox.current) return;
+      if (activeOption.current) {
+        activeBox.current!.style.visibility = 'visible';
+        activeBox.current!.style.width = `${activeOption.current.offsetWidth + 16}px`;
+        activeBox.current!.style.height = `${activeOption.current.offsetHeight + 10}px`;
+        activeBox.current!.style.left = `${activeOption.current.offsetLeft - 8}px`;
+        activeBox.current!.style.top = `${activeOption.current.offsetTop - 5}px`;
+      } else {
+        activeBox.current!.style.visibility = 'hidden';
+      }
+    };
+
+    useEffect(() => {
+      if (theme === 'dark') {
+        document.querySelector('svg')?.classList.add('fill-white');
+        document.querySelector('svg')?.classList.remove('fill-[30,30,30]');
+      } else {
+        document.querySelector('svg')?.classList.add('fill-[30,30,30]');
+        document.querySelector('svg')?.classList.remove('fill-white');
+      }
+      if (pathname === '/') {
+        activeOption.current = document.querySelector('div#logo');
+        if (theme === 'dark') {
+          document.querySelector('svg')?.classList.add('fill-[30,30,30]');
+          document.querySelector('svg')?.classList.remove('fill-white');
+        } else {
+          document.querySelector('svg')?.classList.add('fill-white');
+          document.querySelector('svg')?.classList.remove('fill-[30,30,30]');
+        }
+      } else if (options?.some((option) => option.href === pathname))
+        activeOption.current = document.querySelector(`a[href="${pathname}"]`) as HTMLAnchorElement;
+      else activeOption.current = null;
+
+      initActiveBox();
+    }, [pathname, options, theme]);
 
     if (!show) {
       return null;
@@ -99,18 +142,18 @@ const ExpandedMenu = memo(
 
     return (
       <div className={clsx('flex w-full items-center justify-between', className)}>
+        <div
+          className="visible absolute -z-10 rounded-md bg-[var(--color)] transition-[top,left,width]"
+          ref={activeBox}
+        />
         <div className="flex items-center">
           <Divider />
           {options?.map((option, index) => (
             <Link
               href={option.href}
               key={index}
-              className={clsx(
-                'ml-4 text-lg font-light underline-offset-[12px] transition-colors duration-300 ease-in-out hover:text-gray-400',
-                {
-                  underline: pathname === option.href,
-                },
-              )}
+              className="ml-7 text-lg font-light underline-offset-[12px] transition-colors duration-300 ease-in-out hover:text-gray-400"
+              style={{ color: pathname === option.href ? 'var(--theme-color)' : 'inherit' }}
             >
               {option.title}
             </Link>
