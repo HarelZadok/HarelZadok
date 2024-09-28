@@ -12,7 +12,7 @@ import {
 import { FileType } from '@/types/file';
 import LoadingIcon from '@/components/ui/LoadingIcon';
 import { UploadTask } from 'firebase/storage';
-import PendingFileRow from './PendingFileRow';
+import UploadPendingFileRow from './UploadPendingFileRow';
 import FileRow from './FileRow';
 import { useIsAdmin } from '@/lib/hooks';
 
@@ -90,7 +90,11 @@ export default function FileList({ type }: { type: 'public' | 'private' }) {
         <p>No files found.</p>
         <div className="mt-3 flex items-center justify-center" />
         {pendingFiles.map((file) => (
-          <PendingFileRow key={file.file.name} file={file.file} uploadTask={file.uploadTask} />
+          <UploadPendingFileRow
+            key={file.file.name}
+            file={file.file}
+            uploadTask={file.uploadTask}
+          />
         ))}
       </div>
     );
@@ -123,7 +127,11 @@ export default function FileList({ type }: { type: 'public' | 'private' }) {
             <FileRow key={file.name} file={file} />
           ))}
           {pendingFiles.map((file) => (
-            <PendingFileRow key={file.file.name} file={file.file} uploadTask={file.uploadTask} />
+            <UploadPendingFileRow
+              key={file.file.name}
+              file={file.file}
+              uploadTask={file.uploadTask}
+            />
           ))}
         </ul>
       ) : (

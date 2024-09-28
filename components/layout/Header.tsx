@@ -152,7 +152,7 @@ const ExpandedMenu = memo(
             <Link
               href={option.href}
               key={index}
-              className="ml-7 text-lg font-light underline-offset-[12px] transition-colors duration-300 ease-in-out hover:text-gray-400"
+              className="ml-7 text-lg font-light transition-colors duration-300 ease-in-out hover:text-gray-400"
               style={{ color: pathname === option.href ? 'var(--theme-color)' : 'inherit' }}
             >
               {option.title}
