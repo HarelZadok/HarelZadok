@@ -36,6 +36,11 @@ I'm a passionate programmer with six years of experience in software development
 - **Language:** C++
 - **Description:** Built a physical keyboard interfacing with Raspberry Pi Pico. Developed a complementary Windows program in Xamarin (C#) to enhance functionality.
 
+### Portfolio
+- **Framework:** NextJS
+- **Language:** Typescript
+- **Description:** Built a high-performance, modern portfolio website leveraging NextJS. Implemented server-side rendering, client-side functionality, and dynamic theming. Integrated Firebase for authentication and file storage, enabling a seamless user experience across various devices.
+
 ## Full-Stack Development
 
 I possess a strong command of both front-end and back-end technologies, enabling me to build comprehensive, full-stack solutions. I have experience working with:
