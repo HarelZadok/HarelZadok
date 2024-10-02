@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { IoMdRefresh, IoMdAdd } from 'react-icons/io';
 import {
@@ -21,6 +21,22 @@ export default function FileList({ type }: { type: 'public' | 'private' }) {
     file: File;
     uploadTask: UploadTask;
   }
+
+  const downloadCount = useRef(0);
+
+  const alertUser = (event: BeforeUnloadEvent) => {
+    if (downloadCount.current > 0) {
+      event.preventDefault();
+      return '';
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser);
+    return () => {
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
 
   const [getFiles, uploadFile] =
     type === 'public' ? [getPublicFiles, uploadPublicFile] : [getPrivateFiles, uploadPrivateFile];
@@ -124,7 +140,17 @@ export default function FileList({ type }: { type: 'public' | 'private' }) {
       {!isLoading ? (
         <ul className="space-y-4">
           {updatedFiles.map((file) => (
-            <FileRow key={file.name} file={file} />
+            <FileRow
+              key={file.name}
+              file={file}
+              onDownloadStart={() => downloadCount.current++}
+              onDownloadFinish={() => downloadCount.current--}
+              onDelete={() =>
+                setUpdatedFiles((prev) =>
+                  prev.filter((f) => f.metadata.fullPath !== file.metadata.fullPath),
+                )
+              }
+            />
           ))}
           {pendingFiles.map((file) => (
             <UploadPendingFileRow
