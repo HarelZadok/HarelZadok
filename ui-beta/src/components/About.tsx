@@ -15,13 +15,13 @@ const About = () => {
       <div className="container mx-auto px-6">
         <motion.div
           className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.3 }}
           transition={{ duration: 0.5 }}
         >
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ amount: 0.6 }}
             transition={{ duration: 0.4 }}
@@ -31,7 +31,7 @@ const About = () => {
           </motion.h2>
 
           <motion.div
-            initial={{ opacity: 0, transform: 'translateY(20px)' }}
+            initial={{ opacity: window.innerWidth < 768 ? 1 : 0, transform: 'translateY(20px)' }}
             whileInView={{ opacity: 1, transform: 'translateY(0px)' }}
             viewport={{ amount: 0.6 }}
             transition={{ duration: 0.4, delay: 0.1 }}

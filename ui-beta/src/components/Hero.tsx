@@ -36,13 +36,13 @@ const Hero = () => {
 
       <motion.div
         className="container mx-auto px-6 relative z-10 text-center"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ amount: 0.3 }}
         transition={{ duration: 0.6 }}
       >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6 }}
@@ -52,7 +52,7 @@ const Hero = () => {
         </motion.h2>
         
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -62,7 +62,7 @@ const Hero = () => {
         </motion.h1>
         
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -72,7 +72,7 @@ const Hero = () => {
         </motion.p>
         
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.6 }}

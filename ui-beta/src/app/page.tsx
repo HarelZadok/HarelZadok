@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import Navigation from '../components/Navigation'
 import Hero from '../components/Hero'
 import About from '../components/About'
@@ -11,8 +10,6 @@ import Skills from '../components/Skills'
 import { ThemeWrapper } from '../components/ThemeWrapper'
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
   return (
     <ThemeWrapper>
       <main className="md:snap-y md:snap-mandatory h-screen overflow-y-auto smooth-scroll bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100 via-indigo-50 to-white
