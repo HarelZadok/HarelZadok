@@ -56,7 +56,7 @@ const Hero = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-400 via-purple-500 to-rose-500 animate-gradient-x"
+          className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-rose-500 animate-gradient-x"
         >
           Harel Zadok
         </motion.h1>
