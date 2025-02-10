@@ -106,7 +106,8 @@ const Skills = () => {
         <motion.div
           className="max-w-6xl mx-auto"
           initial={{
-            opacity: window.innerWidth < 768 ? 1 : 0,
+            opacity:
+              typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
             transform: "translateY(50px)",
           }}
           whileInView={{ opacity: 1, transform: "translateY(0px)" }}
@@ -116,7 +117,10 @@ const Skills = () => {
         >
           <motion.h2
             initial={{
-              opacity: window.innerWidth < 768 ? 1 : 0,
+              opacity:
+                typeof window !== "undefined" && window.innerWidth < 768
+                  ? 1
+                  : 0,
               transform: "translateY(20px)",
             }}
             whileInView={{ opacity: 1, transform: "translateY(0px)" }}
@@ -133,7 +137,10 @@ const Skills = () => {
               <motion.div
                 key={category.name}
                 initial={{
-                  opacity: window.innerWidth < 768 ? 1 : 0,
+                  opacity:
+                    typeof window !== "undefined" && window.innerWidth < 768
+                      ? 1
+                      : 0,
                   transform: "translateY(20px)",
                 }}
                 whileInView={{ opacity: 1, transform: "translateY(0px)" }}
@@ -156,9 +163,13 @@ const Skills = () => {
                     <motion.span
                       key={skill}
                       initial={{
-                        opacity: window.innerWidth < 768 ? 1 : 0,
+                        opacity:
+                          typeof window !== "undefined" &&
+                          window.innerWidth < 768
+                            ? 1
+                            : 0,
                         transform:
-                          window.innerWidth < 768 ? "scale(1)" : "scale(0.9)",
+                        typeof window !== "undefined" && window.innerWidth < 768 ? "scale(1)" : "scale(0.9)",
                       }}
                       whileInView={{ opacity: 1, transform: "scale(1)" }}
                       viewport={{ amount: 0.6 }}

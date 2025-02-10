@@ -1,29 +1,31 @@
-'use client'
+"use client";
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useEffect, useState, useRef } from 'react'
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 
 const Hero = () => {
-  const [mounted, setMounted] = useState(false)
-  const [dots, setDots] = useState<Array<{ x: string, y: string }>>([])
-  const sectionRef = useRef(null)
+  const [mounted, setMounted] = useState(false);
+  const [dots, setDots] = useState<Array<{ x: string; y: string }>>([]);
+  const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
-  })
-  
+    offset: ["start end", "end start"],
+  });
+
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
     // Generate random positions for dots only on client-side
-    const newDots = Array(20).fill(0).map(() => ({
-      x: `${Math.random() * 100}%`,
-      y: `${Math.random() * 100}%`
-    }))
-    setDots(newDots)
-  }, [])
+    const newDots = Array(20)
+      .fill(0)
+      .map(() => ({
+        x: `${Math.random() * 100}%`,
+        y: `${Math.random() * 100}%`,
+      }));
+    setDots(newDots);
+  }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
@@ -36,13 +38,25 @@ const Hero = () => {
 
       <motion.div
         className="container mx-auto px-6 relative z-10 text-center"
-        initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
+        initial={{
+          opacity:
+            typeof window !== "undefined" &&
+            typeof window !== "undefined" &&
+            window.innerWidth < 768
+              ? 1
+              : 0,
+          y: 20,
+        }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ amount: 0.3 }}
         transition={{ duration: 0.6 }}
       >
         <motion.h2
-          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
+          initial={{
+            opacity:
+              typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
+            y: 20,
+          }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6 }}
@@ -50,9 +64,13 @@ const Hero = () => {
         >
           Hello, I'm
         </motion.h2>
-        
+
         <motion.h1
-          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
+          initial={{
+            opacity:
+              typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
+            y: 20,
+          }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -60,19 +78,28 @@ const Hero = () => {
         >
           Harel Zadok
         </motion.h1>
-        
+
         <motion.p
-          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
+          initial={{
+            opacity:
+              typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
+            y: 20,
+          }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-xl md:text-2xl text-gray-800 dark:text-gray-300 mb-8 max-w-2xl mx-auto"
         >
-          A passionate programmer with 6 years of experience in software development, specializing in full-stack development.
+          A passionate programmer with 6 years of experience in software
+          development, specializing in full-stack development.
         </motion.p>
-        
+
         <motion.div
-          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
+          initial={{
+            opacity:
+              typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
+            y: 20,
+          }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.6 }}
@@ -86,7 +113,7 @@ const Hero = () => {
           >
             View My Work
           </motion.a>
-          
+
           <motion.a
             href="#contact"
             className="bg-gray-800/10 hover:bg-gray-800/15 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white px-8 py-3 rounded-full transition-all border border-gray-300 dark:border-white/20 hover:border-gray-400 dark:hover:border-white/30"
@@ -123,7 +150,7 @@ const Hero = () => {
         </div>
       )}
     </section>
-  )
-}
+  );
+};
 
 export default Hero;
