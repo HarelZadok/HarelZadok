@@ -5,7 +5,7 @@ import AuthFormButton from './AuthFormButton';
 import AuthForm from './AuthForm';
 import AuthFormTopBar from './AuthFormTopBar';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Container maxWidth="40rem">
       <AuthFormTopBar>
