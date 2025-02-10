@@ -6,12 +6,11 @@ import AppThemeProvider from '@/components/layout/AppThemeProvider';
 import { Inter } from 'next/font/google';
 import clsx from 'clsx';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'HarelZadok',
   openGraph: {
     type: 'website',
     title: 'HarelZadok',
@@ -19,6 +18,7 @@ export const metadata: Metadata = {
     url: 'https://www.harelzadok.com',
     images: ['https://www.harelzadok.com/icon-images/icon-light.png'],
   },
+  title: 'HarelZadok',
   description: "Harel Zadok's website.",
   icons: [
     {

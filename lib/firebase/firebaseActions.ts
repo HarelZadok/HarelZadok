@@ -1,6 +1,6 @@
 import { FileType } from '@/types/file';
 import { storage, auth } from './firebaseConfig';
-import { ref, listAll, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, uploadBytesResumable, getMetadata } from 'firebase/storage';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -20,10 +20,14 @@ export async function getPublicFiles() {
   const files = await Promise.all(
     res.items.map(async (itemRef) => {
       const url = await getDownloadURL(itemRef);
+      const metadata = await getMetadata(itemRef);
 
       return <FileType>{
         name: itemRef.name,
         url: url,
+        size: metadata.size,
+        timeOfCreation: new Date(metadata.timeCreated),
+        metadata: metadata,
       };
     }),
   );
@@ -44,10 +48,14 @@ export async function getPrivateFiles() {
   const files = await Promise.all(
     res.items.map(async (itemRef) => {
       const url = await getDownloadURL(itemRef);
+      const metadata = await getMetadata(itemRef);
 
       return <FileType>{
         name: itemRef.name,
         url: url,
+        size: metadata.size,
+        timeOfCreation: new Date(metadata.timeCreated),
+        metadata: metadata,
       };
     }),
   );

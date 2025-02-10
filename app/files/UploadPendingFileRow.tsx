@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaPause, FaPlay, FaTrash } from 'react-icons/fa6';
 import ProgressBar from '@ramonak/react-progress-bar';
 
-export default function PendingFileRow({
+export default function UploadPendingFileRow({
   file,
   uploadTask,
 }: {
