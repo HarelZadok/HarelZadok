@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+  scroll-behavior: smooth;
+  scroll-timeline-name: --scroll;
+  scroll-timeline-axis: block;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 500ms;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  transition: color 0.3s ease, background 0.3s ease;
+  min-height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Add smooth transitions for theme changes */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 20s ease-in-out infinite;
+  background-size: 200% 200%;
+}

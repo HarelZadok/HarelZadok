@@ -62,7 +62,7 @@ export default function FileRow({
 
     const interval = setInterval(() => {
       setDownloadProgress(progress);
-    }, 20);
+    }, 100);
 
     const stream = new ReadableStream({
       async start(controller) {
