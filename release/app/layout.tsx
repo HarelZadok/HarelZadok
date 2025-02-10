@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   openGraph: {
     type: 'website',
-    title: 'HarelZadok',
+    title: 'Harel Zadok',
     description: "Harel Zadok's website.",
     url: 'https://www.harelzadok.com',
     images: ['https://www.harelzadok.com/icon-images/icon-light.png'],

@@ -36,13 +36,13 @@ const Hero = () => {
 
       <motion.div
         className="container mx-auto px-6 relative z-10 text-center"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ amount: 0.3 }}
         transition={{ duration: 0.6 }}
       >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6 }}
@@ -52,17 +52,17 @@ const Hero = () => {
         </motion.h2>
         
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-400 via-purple-500 to-rose-500 animate-gradient-x"
+          className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-rose-500 animate-gradient-x"
         >
           Harel Zadok
         </motion.h1>
         
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -72,7 +72,7 @@ const Hero = () => {
         </motion.p>
         
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: window.innerWidth < 768 ? 1 : 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ amount: 0.6 }}
           transition={{ duration: 0.6, delay: 0.6 }}

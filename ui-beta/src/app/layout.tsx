@@ -3,7 +3,7 @@ import './globals.css'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'Harel Zadok - Software Engineer & PhD Student',
+  title: 'Harel Zadok',
   description: 'Personal portfolio of Harel Zadok - Software Engineer and Computer Science PhD Student',
 }
 
