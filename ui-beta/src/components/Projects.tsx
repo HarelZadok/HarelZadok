@@ -173,7 +173,7 @@ const Projects = () => {
                 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 className="bg-gray-800/5 dark:bg-white/5 rounded-xl overflow-hidden hover:bg-gray-800/10 dark:hover:bg-white/10 transition-colors"
               >

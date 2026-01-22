@@ -5,6 +5,12 @@ import { Providers } from './providers'
 export const metadata: Metadata = {
   title: 'Harel Zadok',
   description: 'Personal portfolio of Harel Zadok - Software Engineer and Computer Science PhD Student',
+  icons: [
+    {
+      url: '/logo.svg',
+      href: '/logo.svg',
+    },
+  ],
 }
 
 export default function RootLayout({
